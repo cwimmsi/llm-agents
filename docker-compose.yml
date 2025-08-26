@@ -1,0 +1,84 @@
+volumes:
+  ollama_storage:
+  qdrant_storage:
+
+networks:
+  thesis-net:
+    driver: bridge
+
+services:
+  qdrant:
+    image: qdrant/qdrant
+    hostname: qdrant
+    container_name: qdrant
+    networks: 
+      - thesis-net
+    restart: unless-stopped
+    ports:
+      - 6333:6333
+    volumes:
+      - qdrant_storage:/qdrant/storage
+    environment:
+      - QDRANT_LOG_LEVEL=INFO
+      - QDRANT_ALLOW_RECOVERY=true
+    deploy:
+      resources:
+        limits:
+          memory: 1.5G
+          cpus: "1.0"
+
+  ollama:
+    image: ollama/ollama:latest
+    hostname: ollama
+    container_name: ollama
+    networks:
+      - thesis-net
+    restart: unless-stopped
+    ports:
+      - "11434:11434"
+    volumes:
+      - ollama_storage:/root/.ollama
+    deploy:
+      resources:
+        limits:
+          memory: 4G
+          cpus: "2.0"
+        reservations:
+          memory: 1G
+
+  n8n:
+    image: n8nio/n8n:latest
+    hostname: n8n
+    container_name: n8n
+    networks:
+      - thesis-net
+    restart: unless-stopped
+    ports:
+      - "5678:5678"
+    volumes:
+      - ./app/n8n/data:/home/node/.n8n # bind mound to host folder for persistence
+    environment:
+      - N8N_HOST=localhost
+      - N8N_PORT=5678
+      - N8N_PROTOCOL=http
+      - NODE_ENV=production
+      - WEBHOOK_URL=http://localhost:5678/
+      - GENERIC_TIMEZONE=Europe/Berlin
+      - QDRANT_HOST=qdrant
+      - QDRANT_PORT=6333
+      - OLLAMA_HOST=ollama
+      - OLLAMA_PORT=11434
+    logging:
+      options:
+        max-size: "10m"
+        max-file: "3"
+    deploy:
+      resources:
+        limits:
+          memory: 1G
+          cpus: "1.0"
+    depends_on:
+      qdrant:
+        condition: service_started
+      ollama:
+        condition: service_started
