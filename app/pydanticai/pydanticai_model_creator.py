@@ -14,10 +14,10 @@ from utils.logger import setup_logger
 
 load_dotenv()
 
-logger = setup_logger()
-
 
 def model_creator(model: Model):
+    logger = setup_logger()
+
     model_settings = ModelSettings(temperature=0.0)
 
     if model.provider == ModelProvider.OLLAMA:

@@ -8,10 +8,10 @@ from utils.logger import setup_logger
 
 load_dotenv()
 
-logger = setup_logger()
-
 
 def model_creator(model: Model):
+    logger = setup_logger()
+
     # OpenAI Agents SDK suggests using the `LitellmModel` for all model providers other than OpenAI
     # For the sake of consistency, it is used for OpenAI as well
     if model.provider == ModelProvider.OLLAMA:

@@ -3,10 +3,10 @@ from playground.data.models import get_default_model
 from utils.model import Model, ModelProvider
 from utils.logger import setup_logger
 
-logger = setup_logger()
-
 
 def model_creator(model: Model):
+    logger = setup_logger()
+
     temperature = 0.0
 
     if model.provider == ModelProvider.OLLAMA:

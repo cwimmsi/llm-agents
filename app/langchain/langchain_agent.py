@@ -4,15 +4,14 @@ from langchain_core.output_parsers import PydanticOutputParser
 from prompts.format_instructions_prompt import get_format_instructions_prompt
 from prompts.system_prompt import get_system_prompt
 from prompts.user_prompt import get_user_prompt
-from utils import ticket
 from utils.model import Model
 from utils.ticket import Ticket, TicketClassification
 from utils.logger import setup_logger
 
-logger = setup_logger()
-
 
 async def classify_ticket(ticket: Ticket, model: Model) -> Ticket:
+    logger = setup_logger()
+
     system_prompt = get_system_prompt()
     system_prompt = f"{system_prompt}\n\n{get_format_instructions_prompt()}"
     user_prompt = get_user_prompt()

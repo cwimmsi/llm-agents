@@ -6,10 +6,10 @@ from utils.model import Model
 from utils.ticket import Ticket, TicketClassification
 from utils.logger import setup_logger
 
-logger = setup_logger()
-
 
 async def classify_ticket(ticket: Ticket, model: Model) -> Ticket:
+    logger = setup_logger()
+
     system_prompt = get_system_prompt()
     user_prompt = get_user_prompt()
     user_prompt = user_prompt.format(subject=ticket.subject, body=ticket.body)
