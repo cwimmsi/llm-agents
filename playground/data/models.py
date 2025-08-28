@@ -8,26 +8,27 @@ MODELS: Dict[ModelName, Model] = {
         provider=ModelProvider.OLLAMA, name=ModelName.DEEPSEEK_R1
     ),
     ModelName.LLAMA3_2: Model(provider=ModelProvider.OLLAMA, name=ModelName.LLAMA3_2),
-    ModelName.MISTRAL_SMALL: Model(
-        provider=ModelProvider.MISTRALAI, name=ModelName.MISTRAL_SMALL
+    ModelName.MISTRAL_SMALL_2506: Model(
+        provider=ModelProvider.MISTRAL, name=ModelName.MISTRAL_SMALL_2506
     ),
-    ModelName.MISTRAL_MEDIUM: Model(
-        provider=ModelProvider.MISTRALAI, name=ModelName.MISTRAL_MEDIUM
+    ModelName.MISTRAL_MEDIUM_2508: Model(
+        provider=ModelProvider.MISTRAL, name=ModelName.MISTRAL_MEDIUM_2508
     ),
-    ModelName.MISTRAL_LARGE: Model(
-        provider=ModelProvider.MISTRALAI, name=ModelName.MISTRAL_LARGE
+    ModelName.MAGISTRAL_SMALL_2507: Model(
+        provider=ModelProvider.MISTRAL, name=ModelName.MAGISTRAL_SMALL_2507
+    ),
+    ModelName.MAGISTRAL_MEDIUM_2507: Model(
+        provider=ModelProvider.MISTRAL, name=ModelName.MAGISTRAL_MEDIUM_2507
     ),
     ModelName.GPT_4O_MINI: Model(
         provider=ModelProvider.OPENAI, name=ModelName.GPT_4O_MINI
     ),
-    ModelName.GPT_4_1_NANO: Model(
-        provider=ModelProvider.OPENAI, name=ModelName.GPT_4_1_NANO
+    ModelName.GPT_4O: Model(provider=ModelProvider.OPENAI, name=ModelName.GPT_4O),
+    ModelName.GPT_5_MINI: Model(
+        provider=ModelProvider.OPENAI, name=ModelName.GPT_5_MINI
     ),
-    ModelName.GEMINI_2_5_FLASH: Model(
-        provider=ModelProvider.GOOGLEGENAI, name=ModelName.GEMINI_2_5_FLASH
-    ),
-    ModelName.GEMINI_2_5_FLASH_LITE: Model(
-        provider=ModelProvider.GOOGLEGENAI, name=ModelName.GEMINI_2_5_FLASH_LITE
+    ModelName.GPT_3_5_TURBO: Model(
+        provider=ModelProvider.OPENAI, name=ModelName.GPT_3_5_TURBO
     ),
 }
 

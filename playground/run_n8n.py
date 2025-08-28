@@ -1,4 +1,6 @@
+import os
 import httpx
+from dotenv import load_dotenv
 from playground.data.tickets import get_ticket_by_id
 from playground.data.models import get_default_model
 from playground.data.expected_classifications import get_expected_classification
@@ -7,12 +9,10 @@ from utils.model import Model
 from utils.ticket import Ticket, TicketClassification
 from utils.logger import setup_logger
 
-N8N_WEBHOOK_URL_TEST = (
-    "http://localhost:5678/webhook-test/14be3ed3-a7e9-4948-a5c2-9f4b464e3c1b"
-)
-N8N_WEBHOOK_URL_PROD = (
-    "http://localhost:5678/webhook/14be3ed3-a7e9-4948-a5c2-9f4b464e3c1b"
-)
+load_dotenv()
+
+N8N_WEBHOOK_URL_TEST = os.environ.get("N8N_WEBHOOK_URL_TEST")
+N8N_WEBHOOK_URL_PROD = os.environ.get("N8N_WEBHOOK_URL_PROD")
 
 
 async def process_ticket_event(ticket_event: Ticket, n8n_webhook_url: str) -> Ticket:

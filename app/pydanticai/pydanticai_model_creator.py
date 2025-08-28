@@ -2,10 +2,8 @@ import os
 from dotenv import load_dotenv
 from pydantic_ai.models import ModelSettings
 from pydantic_ai.models.mistral import MistralModel
-from pydantic_ai.models.google import GoogleModel
 from pydantic_ai.models.openai import OpenAIModel
 from pydantic_ai.providers.mistral import MistralProvider
-from pydantic_ai.providers.google import GoogleProvider
 from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.providers.ollama import OllamaProvider
 from playground.data.models import get_default_model
@@ -27,21 +25,15 @@ def model_creator(model: Model):
             model_name=model.get_name_value(),
             settings=model_settings,
         )
-    elif model.provider == ModelProvider.MISTRALAI:
+    elif model.provider == ModelProvider.MISTRAL:
         llm = MistralModel(
-            provider=MistralProvider(api_key=os.environ.get("MISTRALAI_API_KEY")),
+            provider=MistralProvider(api_key=os.environ.get("MISTRAL_API_KEY")),
             model_name=model.get_name_value(),
             settings=model_settings,
         )
     elif model.provider == ModelProvider.OPENAI:
         llm = OpenAIModel(
             provider=OpenAIProvider(api_key=os.environ.get("OPENAI_API_KEY")),
-            model_name=model.get_name_value(),
-            settings=model_settings,
-        )
-    elif model.provider == ModelProvider.GOOGLEGENAI:
-        llm = GoogleModel(
-            provider=GoogleProvider(api_key=os.environ.get("GOOGLEGENAI_API_KEY")),
             model_name=model.get_name_value(),
             settings=model_settings,
         )

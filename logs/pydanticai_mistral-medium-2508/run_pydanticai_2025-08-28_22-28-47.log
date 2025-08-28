@@ -1,0 +1,560 @@
+2025-08-28 22:28:47,297 - INFO - pydanticai_mistral-medium-2508 - Starting experiment with agent run function 'run_pydanticai' and model 'ModelName.MISTRAL_MEDIUM_2508'
+2025-08-28 22:28:47,298 - INFO - pydanticai_mistral-medium-2508 - TKT-001: Start processing ticket event...
+2025-08-28 22:28:47,298 - DEBUG - pydanticai_mistral-medium-2508 - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction                 but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment,                 such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents.                 It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service.                 Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major                 business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for                 significant impact for one or a few employees)
+   - medium (Standard issues that can be scheduled for regular handling,                 it's the default priority level)
+   - low (Minor issues or requests that can be handled when convenient.                 The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components (computers, phones, laptops, servers), except printers)
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+2025-08-28 22:28:47,309 - DEBUG - pydanticai_mistral-medium-2508 - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: WLAN ausgefallen
+Ticket body: Ich und mein Team haben kein Internet. Weder auf dem Laptop noch auf dem Handy. 
+        Bei unseren Kollegen im anderen Gebäude funktioniert es auch nicht. Bitte um schnelle Behebung des Problems!
+        Wir müssen dringend Rechnungen versenden.
+
+2025-08-28 22:28:57,837 - DEBUG - pydanticai_mistral-medium-2508 - Ticket classification: ticket_type=<TicketType.INCIDENT: 'incident'> ticket_priority=<TicketPriority.CRITICAL: 'critical'> ticket_sentiment=<TicketSentiment.NEGATIVE: 'negative'> ticket_tags=[<TicketTags.NETWORK: 'network'>] responsible_team=<ResponsibleTeam.HARDWARE_NETWORK_TEAM: 'hardware_network_team'> confidence_score=0.95 suggested_action='Als ersten Schritt sollte das IT-Team überprüfen, ob das WLAN-Netzwerk unternehmensweit ausgefallen ist oder ob es sich um ein lokal begrenztes Problem handelt. Dazu können die Netzwerkmonitoring-Tools genutzt werden, um den Status der Access Points, Router und Switches zu prüfen. Falls das Problem unternehmensweit auftritt, sollte umgehend der Internetdienstanbieter kontaktiert werden, um zu klären, ob es Störungen auf deren Seite gibt. Gleichzeitig sollte das Team prüfen, ob es lokale Konfigurationsprobleme oder Hardwareausfälle gibt, die den Ausfall verursachen könnten. Falls möglich, könnte eine vorübergehende Lösung wie die Nutzung mobiler Hotspots für dringende Aufgaben (z. B. das Versenden von Rechnungen) angeboten werden, bis das Problem behoben ist.' reasoning='Die Klassifizierung dieses Tickets basiert auf mehreren Faktoren: \n\n1. **Ticket-Typ (incident)**: Es handelt sich um eine unplanned interruption eines IT-Service (WLAN-Ausfall), die eine schnelle Wiederherstellung erfordert. Dies entspricht der Definition eines Incidents. \n\n2. **Priorität (critical)**: Der Ausfall betrifft nicht nur einen einzelnen Mitarbeiter, sondern ein ganzes Team und möglicherweise das gesamte Unternehmen (Kollegen in einem anderen Gebäude sind ebenfalls betroffen). Zudem handelt es sich um eine dringende Angelegenheit, da Rechnungen versendet werden müssen. Dies rechtfertigt die Einstufung als kritisch. \n\n3. **Sentiment (negative)**: Der Ton des Tickets ist dringlich und frustriert, was auf eine negative Stimmung des Absenders hindeutet. Dies wird durch Formulierungen wie "Bitte um schnelle Behebung des Problems!" und "Wir müssen dringend Rechnungen versenden" deutlich. \n\n4. **Tags (network)**: Das Problem betrifft das WLAN, was klar unter die Kategorie Netzwerk fällt. \n\n5. **Verantwortliches Team (hardware_network_team)**: Da es sich um ein Netzwerkproblem handelt, ist das spezialisierte Team für Hardware und Netzwerk die richtige Anlaufstelle. \n\n6. **Confidence Score (0.95)**: Die Klassifizierung ist sehr sicher, da alle Informationen im Ticket klar auf einen unternehmensweiten WLAN-Ausfall hindeuten und die Dringlichkeit sowie der negative Ton des Absenders deutlich erkennbar sind.'
+2025-08-28 22:28:57,843 - DEBUG - pydanticai_mistral-medium-2508 - Ticket: {
+  "id": "TKT-001",
+  "subject": "WLAN ausgefallen",
+  "body": "Ich und mein Team haben kein Internet. Weder auf dem Laptop noch auf dem Handy. \n        Bei unseren Kollegen im anderen Gebäude funktioniert es auch nicht. Bitte um schnelle Behebung des Problems!\n        Wir müssen dringend Rechnungen versenden.",
+  "status": "open",
+  "assigned_to": "hardware_network_team",
+  "classification": {
+    "ticket_type": "incident",
+    "ticket_priority": "critical",
+    "ticket_sentiment": "negative",
+    "ticket_tags": [
+      "network"
+    ],
+    "responsible_team": "hardware_network_team",
+    "confidence_score": 0.95,
+    "suggested_action": "Als ersten Schritt sollte das IT-Team überprüfen, ob das WLAN-Netzwerk unternehmensweit ausgefallen ist oder ob es sich um ein lokal begrenztes Problem handelt. Dazu können die Netzwerkmonitoring-Tools genutzt werden, um den Status der Access Points, Router und Switches zu prüfen. Falls das Problem unternehmensweit auftritt, sollte umgehend der Internetdienstanbieter kontaktiert werden, um zu klären, ob es Störungen auf deren Seite gibt. Gleichzeitig sollte das Team prüfen, ob es lokale Konfigurationsprobleme oder Hardwareausfälle gibt, die den Ausfall verursachen könnten. Falls möglich, könnte eine vorübergehende Lösung wie die Nutzung mobiler Hotspots für dringende Aufgaben (z. B. das Versenden von Rechnungen) angeboten werden, bis das Problem behoben ist.",
+    "reasoning": "Die Klassifizierung dieses Tickets basiert auf mehreren Faktoren: \n\n1. **Ticket-Typ (incident)**: Es handelt sich um eine unplanned interruption eines IT-Service (WLAN-Ausfall), die eine schnelle Wiederherstellung erfordert. Dies entspricht der Definition eines Incidents. \n\n2. **Priorität (critical)**: Der Ausfall betrifft nicht nur einen einzelnen Mitarbeiter, sondern ein ganzes Team und möglicherweise das gesamte Unternehmen (Kollegen in einem anderen Gebäude sind ebenfalls betroffen). Zudem handelt es sich um eine dringende Angelegenheit, da Rechnungen versendet werden müssen. Dies rechtfertigt die Einstufung als kritisch. \n\n3. **Sentiment (negative)**: Der Ton des Tickets ist dringlich und frustriert, was auf eine negative Stimmung des Absenders hindeutet. Dies wird durch Formulierungen wie \"Bitte um schnelle Behebung des Problems!\" und \"Wir müssen dringend Rechnungen versenden\" deutlich. \n\n4. **Tags (network)**: Das Problem betrifft das WLAN, was klar unter die Kategorie Netzwerk fällt. \n\n5. **Verantwortliches Team (hardware_network_team)**: Da es sich um ein Netzwerkproblem handelt, ist das spezialisierte Team für Hardware und Netzwerk die richtige Anlaufstelle. \n\n6. **Confidence Score (0.95)**: Die Klassifizierung ist sehr sicher, da alle Informationen im Ticket klar auf einen unternehmensweiten WLAN-Ausfall hindeuten und die Dringlichkeit sowie der negative Ton des Absenders deutlich erkennbar sind."
+  }
+}
+2025-08-28 22:28:57,844 - INFO - pydanticai_mistral-medium-2508 - TKT-001: Evaluation score: 5
+2025-08-28 22:28:57,846 - INFO - pydanticai_mistral-medium-2508 - TKT-002: Start processing ticket event...
+2025-08-28 22:28:57,847 - DEBUG - pydanticai_mistral-medium-2508 - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction                 but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment,                 such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents.                 It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service.                 Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major                 business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for                 significant impact for one or a few employees)
+   - medium (Standard issues that can be scheduled for regular handling,                 it's the default priority level)
+   - low (Minor issues or requests that can be handled when convenient.                 The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components (computers, phones, laptops, servers), except printers)
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+2025-08-28 22:28:57,847 - DEBUG - pydanticai_mistral-medium-2508 - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: OneDrive Datei kann nicht geöffnet werden
+Ticket body: Wenn ich eine Datei in OneDrive lokal öffne, kommt die Fehlermeldung, dass der Dateipfad zu lang ist.
+
+2025-08-28 22:29:09,066 - DEBUG - pydanticai_mistral-medium-2508 - Ticket classification: ticket_type=<TicketType.INCIDENT: 'incident'> ticket_priority=<TicketPriority.MEDIUM: 'medium'> ticket_sentiment=<TicketSentiment.NEUTRAL: 'neutral'> ticket_tags=[<TicketTags.SOFTWARE: 'software'>] responsible_team=<ResponsibleTeam.SOFTWARE_TEAM: 'software_team'> confidence_score=0.95 suggested_action='Als ersten Schritt sollte der Support-Mitarbeiter den genauen Dateipfad und die Dateigröße der betroffenen Datei überprüfen. Anschließend kann geprüft werden, ob der Dateipfad tatsächlich die maximale Zeichenbegrenzung von Windows (260 Zeichen) überschreitet. Falls dies der Fall ist, gibt es mehrere Lösungsansätze: 1) Die Datei kann in einen Ordner mit kürzerem Pfad verschoben werden, 2) der Dateiname kann verkürzt werden oder 3) es kann geprüft werden, ob die Verwendung von UNC-Pfaden (Uniform Naming Convention) eine Lösung bietet. Sollte das Problem weiterhin bestehen, kann der Benutzer angewiesen werden, die Datei direkt über die OneDrive-Weboberfläche zu öffnen, um den lokalen Pfad zu umgehen. Falls nötig, kann auch eine Eskalation an das Software-Team erfolgen, um zu prüfen, ob es spezifische Einstellungen oder Updates gibt, die dieses Problem beheben können.' reasoning='Die Klassifizierung dieses Tickets basiert auf mehreren Faktoren: 1) **Ticket-Typ**: Es handelt sich um einen unplanmäßigen Vorfall, bei dem eine Datei nicht geöffnet werden kann. Dies entspricht der Definition eines *Incidents*, da die normale Nutzung eines IT-Service (hier OneDrive) beeinträchtigt ist. 2) **Priorität**: Die Priorität wurde auf *medium* gesetzt, da das Problem zwar die Produktivität des Nutzers beeinträchtigt, aber keine größeren Auswirkungen auf das Unternehmen hat. Es handelt sich um ein isoliertes Problem, das nicht dringend eine sofortige Lösung erfordert. 3) **Sentiment**: Der Benutzer beschreibt das Problem sachlich, ohne emotionale Färbung. Daher wurde das Sentiment als *neutral* eingestuft. 4) **Tags**: Da das Problem mit einer Software (OneDrive) zusammenhängt, wurde der Tag *software* vergeben. 5) **Verantwortliches Team**: Das *software_team* ist für die Bearbeitung von Software-Problemen zuständig, daher wurde es als verantwortliches Team ausgewählt. Die hohe Confidence-Score von 0.95 spiegelt die Klarheit der Problemstellung und die eindeutige Zuordnung zu den Klassifizierungskriterien wider.'
+2025-08-28 22:29:09,067 - DEBUG - pydanticai_mistral-medium-2508 - Ticket: {
+  "id": "TKT-002",
+  "subject": "OneDrive Datei kann nicht geöffnet werden",
+  "body": "Wenn ich eine Datei in OneDrive lokal öffne, kommt die Fehlermeldung, dass der Dateipfad zu lang ist.",
+  "status": "open",
+  "assigned_to": "software_team",
+  "classification": {
+    "ticket_type": "incident",
+    "ticket_priority": "medium",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "software"
+    ],
+    "responsible_team": "software_team",
+    "confidence_score": 0.95,
+    "suggested_action": "Als ersten Schritt sollte der Support-Mitarbeiter den genauen Dateipfad und die Dateigröße der betroffenen Datei überprüfen. Anschließend kann geprüft werden, ob der Dateipfad tatsächlich die maximale Zeichenbegrenzung von Windows (260 Zeichen) überschreitet. Falls dies der Fall ist, gibt es mehrere Lösungsansätze: 1) Die Datei kann in einen Ordner mit kürzerem Pfad verschoben werden, 2) der Dateiname kann verkürzt werden oder 3) es kann geprüft werden, ob die Verwendung von UNC-Pfaden (Uniform Naming Convention) eine Lösung bietet. Sollte das Problem weiterhin bestehen, kann der Benutzer angewiesen werden, die Datei direkt über die OneDrive-Weboberfläche zu öffnen, um den lokalen Pfad zu umgehen. Falls nötig, kann auch eine Eskalation an das Software-Team erfolgen, um zu prüfen, ob es spezifische Einstellungen oder Updates gibt, die dieses Problem beheben können.",
+    "reasoning": "Die Klassifizierung dieses Tickets basiert auf mehreren Faktoren: 1) **Ticket-Typ**: Es handelt sich um einen unplanmäßigen Vorfall, bei dem eine Datei nicht geöffnet werden kann. Dies entspricht der Definition eines *Incidents*, da die normale Nutzung eines IT-Service (hier OneDrive) beeinträchtigt ist. 2) **Priorität**: Die Priorität wurde auf *medium* gesetzt, da das Problem zwar die Produktivität des Nutzers beeinträchtigt, aber keine größeren Auswirkungen auf das Unternehmen hat. Es handelt sich um ein isoliertes Problem, das nicht dringend eine sofortige Lösung erfordert. 3) **Sentiment**: Der Benutzer beschreibt das Problem sachlich, ohne emotionale Färbung. Daher wurde das Sentiment als *neutral* eingestuft. 4) **Tags**: Da das Problem mit einer Software (OneDrive) zusammenhängt, wurde der Tag *software* vergeben. 5) **Verantwortliches Team**: Das *software_team* ist für die Bearbeitung von Software-Problemen zuständig, daher wurde es als verantwortliches Team ausgewählt. Die hohe Confidence-Score von 0.95 spiegelt die Klarheit der Problemstellung und die eindeutige Zuordnung zu den Klassifizierungskriterien wider."
+  }
+}
+2025-08-28 22:29:09,068 - WARNING - pydanticai_mistral-medium-2508 - TKT-002: Discrepancy actual: TicketPriority.MEDIUM <> expected: TicketPriority.HIGH
+2025-08-28 22:29:09,068 - WARNING - pydanticai_mistral-medium-2508 - TKT-002: Discrepancy actual: TicketSentiment.NEUTRAL <> expected: TicketSentiment.NEGATIVE
+2025-08-28 22:29:09,069 - INFO - pydanticai_mistral-medium-2508 - TKT-002: Evaluation score: 3
+2025-08-28 22:29:09,069 - INFO - pydanticai_mistral-medium-2508 - TKT-003: Start processing ticket event...
+2025-08-28 22:29:09,069 - DEBUG - pydanticai_mistral-medium-2508 - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction                 but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment,                 such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents.                 It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service.                 Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major                 business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for                 significant impact for one or a few employees)
+   - medium (Standard issues that can be scheduled for regular handling,                 it's the default priority level)
+   - low (Minor issues or requests that can be handled when convenient.                 The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components (computers, phones, laptops, servers), except printers)
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+2025-08-28 22:29:09,070 - DEBUG - pydanticai_mistral-medium-2508 - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: PDFXChange installieren
+Ticket body: Hallo, ich brauche den PDFXChange auf meinem Laptop. Könnt ihr mir diesen bitte installieren.
+
+2025-08-28 22:29:22,942 - DEBUG - pydanticai_mistral-medium-2508 - Ticket classification: ticket_type=<TicketType.SERVICE_REQUEST: 'service_request'> ticket_priority=<TicketPriority.MEDIUM: 'medium'> ticket_sentiment=<TicketSentiment.NEUTRAL: 'neutral'> ticket_tags=[<TicketTags.SOFTWARE: 'software'>] responsible_team=<ResponsibleTeam.IT_SUPPORT: 'it_support'> confidence_score=0.95 suggested_action='Als ersten Schritt sollte das IT-Support-Team den Nutzer kontaktieren, um die genaue Version von PDFXChange zu klären, die installiert werden soll, falls es spezifische Unternehmensrichtlinien oder Lizenzanforderungen gibt. Anschließend sollte überprüft werden, ob die Software bereits im Unternehmenssoftwarekatalog verfügbar ist und ob der Nutzer die Berechtigung für die Installation besitzt. Falls ja, kann die Installation entweder remote durch das IT-Support-Team durchgeführt oder dem Nutzer eine Anleitung zur Selbstinstallation bereitgestellt werden. Sollte die Software noch nicht im Katalog vorhanden sein, muss die Anfrage an das Software-Team weitergeleitet werden, um die Lizenzierung und Freigabe zu prüfen.' reasoning='1. **Ticket-Typ**: Die Anfrage des Nutzers, PDFXChange auf seinem Laptop zu installieren, ist eine routinemäßige Serviceanfrage. Es handelt sich nicht um einen Vorfall (incident), ein Problem (problem) oder eine Änderungsanfrage (change_request), da keine Störung oder tiefe Analyse erforderlich ist. Daher wurde der Typ als **service_request** klassifiziert.\n\n2. **Priorität**: Die Anfrage betrifft einen einzelnen Nutzer und ist nicht dringend, da der Nutzer nicht blockiert ist oder eine kritische Geschäftsauswirkung besteht. Daher wurde die Priorität als **medium** eingestuft, was der Standardpriorität für solche Anfragen entspricht.\n\n3. **Sentiment**: Der Nutzer formuliert seine Anfrage sachlich und ohne emotionale Färbung. Es gibt keine Anzeichen von Unzufriedenheit oder Dringlichkeit, daher wurde das Sentiment als **neutral** bewertet.\n\n4. **Tags**: Da es sich um die Installation einer Software handelt, ist das Tag **software** passend. Andere Tags wie hardware, network oder printing sind nicht relevant.\n\n5. **Verantwortliches Team**: Die Installation von Standardsoftware fällt in den Verantwortungsbereich des **it_support**, da es sich um eine grundlegende Serviceanfrage handelt. Nur bei komplexen oder unternehmensweiten Softwareanfragen wäre das software_team zuständig.\n\n6. **Confidence Score**: Die Klassifizierung ist mit hoher Sicherheit möglich, da die Anfrage klar formuliert ist und keine Ambivalenzen aufweist. Daher wurde ein Confidence Score von **0.95** vergeben.'
+2025-08-28 22:29:22,946 - DEBUG - pydanticai_mistral-medium-2508 - Ticket: {
+  "id": "TKT-003",
+  "subject": "PDFXChange installieren",
+  "body": "Hallo, ich brauche den PDFXChange auf meinem Laptop. Könnt ihr mir diesen bitte installieren.",
+  "status": "open",
+  "assigned_to": "it_support",
+  "classification": {
+    "ticket_type": "service_request",
+    "ticket_priority": "medium",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "software"
+    ],
+    "responsible_team": "it_support",
+    "confidence_score": 0.95,
+    "suggested_action": "Als ersten Schritt sollte das IT-Support-Team den Nutzer kontaktieren, um die genaue Version von PDFXChange zu klären, die installiert werden soll, falls es spezifische Unternehmensrichtlinien oder Lizenzanforderungen gibt. Anschließend sollte überprüft werden, ob die Software bereits im Unternehmenssoftwarekatalog verfügbar ist und ob der Nutzer die Berechtigung für die Installation besitzt. Falls ja, kann die Installation entweder remote durch das IT-Support-Team durchgeführt oder dem Nutzer eine Anleitung zur Selbstinstallation bereitgestellt werden. Sollte die Software noch nicht im Katalog vorhanden sein, muss die Anfrage an das Software-Team weitergeleitet werden, um die Lizenzierung und Freigabe zu prüfen.",
+    "reasoning": "1. **Ticket-Typ**: Die Anfrage des Nutzers, PDFXChange auf seinem Laptop zu installieren, ist eine routinemäßige Serviceanfrage. Es handelt sich nicht um einen Vorfall (incident), ein Problem (problem) oder eine Änderungsanfrage (change_request), da keine Störung oder tiefe Analyse erforderlich ist. Daher wurde der Typ als **service_request** klassifiziert.\n\n2. **Priorität**: Die Anfrage betrifft einen einzelnen Nutzer und ist nicht dringend, da der Nutzer nicht blockiert ist oder eine kritische Geschäftsauswirkung besteht. Daher wurde die Priorität als **medium** eingestuft, was der Standardpriorität für solche Anfragen entspricht.\n\n3. **Sentiment**: Der Nutzer formuliert seine Anfrage sachlich und ohne emotionale Färbung. Es gibt keine Anzeichen von Unzufriedenheit oder Dringlichkeit, daher wurde das Sentiment als **neutral** bewertet.\n\n4. **Tags**: Da es sich um die Installation einer Software handelt, ist das Tag **software** passend. Andere Tags wie hardware, network oder printing sind nicht relevant.\n\n5. **Verantwortliches Team**: Die Installation von Standardsoftware fällt in den Verantwortungsbereich des **it_support**, da es sich um eine grundlegende Serviceanfrage handelt. Nur bei komplexen oder unternehmensweiten Softwareanfragen wäre das software_team zuständig.\n\n6. **Confidence Score**: Die Klassifizierung ist mit hoher Sicherheit möglich, da die Anfrage klar formuliert ist und keine Ambivalenzen aufweist. Daher wurde ein Confidence Score von **0.95** vergeben."
+  }
+}
+2025-08-28 22:29:22,947 - WARNING - pydanticai_mistral-medium-2508 - TKT-003: Discrepancy actual: ResponsibleTeam.IT_SUPPORT <> expected: ResponsibleTeam.SOFTWARE_TEAM
+2025-08-28 22:29:22,948 - INFO - pydanticai_mistral-medium-2508 - TKT-003: Evaluation score: 4
+2025-08-28 22:29:22,950 - INFO - pydanticai_mistral-medium-2508 - TKT-004: Start processing ticket event...
+2025-08-28 22:29:22,951 - DEBUG - pydanticai_mistral-medium-2508 - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction                 but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment,                 such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents.                 It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service.                 Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major                 business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for                 significant impact for one or a few employees)
+   - medium (Standard issues that can be scheduled for regular handling,                 it's the default priority level)
+   - low (Minor issues or requests that can be handled when convenient.                 The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components (computers, phones, laptops, servers), except printers)
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+2025-08-28 22:29:22,952 - DEBUG - pydanticai_mistral-medium-2508 - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: Neuer Mitarbeiter ab 01.11.2025
+Ticket body: Hallo IT, bitte alles für unseren neuen Mitarbeiter in der Abteilung Kalkulation vorbereiten. 
+        Er erhält einen Laptop und ein Firmenhandy. Die Programme und Zugänge gleich einrichten, wie bei den anderen Kollegen der Abteilung.
+        Eintrittsdatum ist der 01.11.2025. Danke!
+
+2025-08-28 22:29:38,820 - DEBUG - pydanticai_mistral-medium-2508 - Ticket classification: ticket_type=<TicketType.SERVICE_REQUEST: 'service_request'> ticket_priority=<TicketPriority.MEDIUM: 'medium'> ticket_sentiment=<TicketSentiment.NEUTRAL: 'neutral'> ticket_tags=[<TicketTags.HARDWARE: 'hardware'>, <TicketTags.SOFTWARE: 'software'>, <TicketTags.ONBOARDING: 'onboarding'>] responsible_team=<ResponsibleTeam.IT_SUPPORT: 'it_support'> confidence_score=0.95 suggested_action='Die IT-Abteilung sollte zunächst die Bestellung des Laptops und des Firmenhandys für den neuen Mitarbeiter veranlassen. Parallel dazu sollten die Standard-Softwareanwendungen und Zugriffe, die für die Abteilung Kalkulation üblich sind, vorbereitet werden. Dies umfasst in der Regel die Einrichtung von E-Mail-Konten, Zugriff auf interne Systeme wie das ERP-System und andere abteilungsspezifische Tools. \n\nAls nächstes sollte der IT-Support die Onboarding-Checkliste für neue Mitarbeiter prüfen, um sicherzustellen, dass alle notwendigen Schritte abgedeckt sind. Dazu gehört auch die Koordination mit der Personalabteilung, um sicherzustellen, dass alle relevanten Informationen (z. B. Name, Position, Kontaktdaten) korrekt und vollständig vorliegen. \n\nEin Termin zur Übergabe der Geräte und zur Einweisung in die Systeme sollte mit dem neuen Mitarbeiter und dem zuständigen Vorgesetzten vereinbart werden. Dies kann entweder am ersten Arbeitstag oder bereits im Vorfeld erfolgen, um einen reibungslosen Start zu gewährleisten. \n\nFalls spezifische Schulungen oder Einweisungen für die Software oder Systeme erforderlich sind, sollten diese ebenfalls organisiert werden. Dies kann entweder durch die IT-Abteilung selbst oder durch die zuständigen Fachabteilungen erfolgen.' reasoning='Der Ticket-Typ wurde als **service_request** klassifiziert, da es sich um eine geplante Anfrage handelt, die keine Störung oder ein Problem darstellt, sondern eine Routineaufgabe für die Vorbereitung eines neuen Mitarbeiters. \n\nDie Priorität wurde auf **medium** gesetzt, da die Anfrage zwar wichtig ist, aber nicht dringend bearbeitet werden muss, da der Eintrittstermin des Mitarbeiters erst in über einem Jahr liegt (01.11.2025). Es handelt sich um eine Standardaufgabe, die gut geplant werden kann. \n\nDas Sentiment des Ticket-Erstellers wurde als **neutral** eingestuft, da der Ton sachlich und höflich ist, ohne besondere Emotionen wie Frustration oder Begeisterung zu zeigen. \n\nDie Tags **hardware**, **software** und **onboarding** wurden gewählt, da die Anfrage die Bereitstellung von physischen Geräten (Laptop, Firmenhandy), die Einrichtung von Software und Zugriffen sowie den Onboarding-Prozess für einen neuen Mitarbeiter umfasst. \n\nAls verantwortliches Team wurde **it_support** ausgewählt, da die IT-Support-Abteilung in der Regel für die Bearbeitung von Onboarding-Anfragen, die Bereitstellung von Hardware und die Einrichtung von Standard-Software zuständig ist. \n\nDie Confidence Score liegt bei **0.95**, da die Klassifizierung klar und eindeutig ist und alle Informationen im Ticket eindeutig interpretiert werden können.'
+2025-08-28 22:29:38,826 - DEBUG - pydanticai_mistral-medium-2508 - Ticket: {
+  "id": "TKT-004",
+  "subject": "Neuer Mitarbeiter ab 01.11.2025",
+  "body": "Hallo IT, bitte alles für unseren neuen Mitarbeiter in der Abteilung Kalkulation vorbereiten. \n        Er erhält einen Laptop und ein Firmenhandy. Die Programme und Zugänge gleich einrichten, wie bei den anderen Kollegen der Abteilung.\n        Eintrittsdatum ist der 01.11.2025. Danke!",
+  "status": "open",
+  "assigned_to": "it_support",
+  "classification": {
+    "ticket_type": "service_request",
+    "ticket_priority": "medium",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "hardware",
+      "software",
+      "onboarding"
+    ],
+    "responsible_team": "it_support",
+    "confidence_score": 0.95,
+    "suggested_action": "Die IT-Abteilung sollte zunächst die Bestellung des Laptops und des Firmenhandys für den neuen Mitarbeiter veranlassen. Parallel dazu sollten die Standard-Softwareanwendungen und Zugriffe, die für die Abteilung Kalkulation üblich sind, vorbereitet werden. Dies umfasst in der Regel die Einrichtung von E-Mail-Konten, Zugriff auf interne Systeme wie das ERP-System und andere abteilungsspezifische Tools. \n\nAls nächstes sollte der IT-Support die Onboarding-Checkliste für neue Mitarbeiter prüfen, um sicherzustellen, dass alle notwendigen Schritte abgedeckt sind. Dazu gehört auch die Koordination mit der Personalabteilung, um sicherzustellen, dass alle relevanten Informationen (z. B. Name, Position, Kontaktdaten) korrekt und vollständig vorliegen. \n\nEin Termin zur Übergabe der Geräte und zur Einweisung in die Systeme sollte mit dem neuen Mitarbeiter und dem zuständigen Vorgesetzten vereinbart werden. Dies kann entweder am ersten Arbeitstag oder bereits im Vorfeld erfolgen, um einen reibungslosen Start zu gewährleisten. \n\nFalls spezifische Schulungen oder Einweisungen für die Software oder Systeme erforderlich sind, sollten diese ebenfalls organisiert werden. Dies kann entweder durch die IT-Abteilung selbst oder durch die zuständigen Fachabteilungen erfolgen.",
+    "reasoning": "Der Ticket-Typ wurde als **service_request** klassifiziert, da es sich um eine geplante Anfrage handelt, die keine Störung oder ein Problem darstellt, sondern eine Routineaufgabe für die Vorbereitung eines neuen Mitarbeiters. \n\nDie Priorität wurde auf **medium** gesetzt, da die Anfrage zwar wichtig ist, aber nicht dringend bearbeitet werden muss, da der Eintrittstermin des Mitarbeiters erst in über einem Jahr liegt (01.11.2025). Es handelt sich um eine Standardaufgabe, die gut geplant werden kann. \n\nDas Sentiment des Ticket-Erstellers wurde als **neutral** eingestuft, da der Ton sachlich und höflich ist, ohne besondere Emotionen wie Frustration oder Begeisterung zu zeigen. \n\nDie Tags **hardware**, **software** und **onboarding** wurden gewählt, da die Anfrage die Bereitstellung von physischen Geräten (Laptop, Firmenhandy), die Einrichtung von Software und Zugriffen sowie den Onboarding-Prozess für einen neuen Mitarbeiter umfasst. \n\nAls verantwortliches Team wurde **it_support** ausgewählt, da die IT-Support-Abteilung in der Regel für die Bearbeitung von Onboarding-Anfragen, die Bereitstellung von Hardware und die Einrichtung von Standard-Software zuständig ist. \n\nDie Confidence Score liegt bei **0.95**, da die Klassifizierung klar und eindeutig ist und alle Informationen im Ticket eindeutig interpretiert werden können."
+  }
+}
+2025-08-28 22:29:38,827 - WARNING - pydanticai_mistral-medium-2508 - TKT-004: Discrepancy actual: TicketSentiment.NEUTRAL <> expected: TicketSentiment.POSITIVE
+2025-08-28 22:29:38,828 - WARNING - pydanticai_mistral-medium-2508 - TKT-004: Discrepancy actual: [<TicketTags.HARDWARE: 'hardware'>, <TicketTags.SOFTWARE: 'software'>, <TicketTags.ONBOARDING: 'onboarding'>] <> expected: [<TicketTags.ONBOARDING: 'onboarding'>]
+2025-08-28 22:29:38,829 - INFO - pydanticai_mistral-medium-2508 - TKT-004: Evaluation score: 3
+2025-08-28 22:29:38,831 - INFO - pydanticai_mistral-medium-2508 - TKT-005: Start processing ticket event...
+2025-08-28 22:29:38,832 - DEBUG - pydanticai_mistral-medium-2508 - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction                 but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment,                 such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents.                 It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service.                 Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major                 business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for                 significant impact for one or a few employees)
+   - medium (Standard issues that can be scheduled for regular handling,                 it's the default priority level)
+   - low (Minor issues or requests that can be handled when convenient.                 The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components (computers, phones, laptops, servers), except printers)
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+2025-08-28 22:29:38,832 - DEBUG - pydanticai_mistral-medium-2508 - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: Power BI Bericht Datenquelle erweitern
+Ticket body: Wir brauchen zusätzliche Daten in der Datenquelle für unseren KORE Power BI Bericht.
+        Die benötigten Buchungen sind die Verkaufsbuchungen. Bitte um Rückmeldung wie bald ihr das umsetzen könnt.
+        Für weitere Fragen meldet euch in der KORE Abteilung. Danke.
+
+2025-08-28 22:29:53,115 - DEBUG - pydanticai_mistral-medium-2508 - Ticket classification: ticket_type=<TicketType.CHANGE_REQUEST: 'change_request'> ticket_priority=<TicketPriority.MEDIUM: 'medium'> ticket_sentiment=<TicketSentiment.NEUTRAL: 'neutral'> ticket_tags=[<TicketTags.SOFTWARE: 'software'>] responsible_team=<ResponsibleTeam.DWH_BI_TEAM: 'datawarehouse_businessintelligence_team'> confidence_score=0.95 suggested_action='Als ersten Schritt sollte das Ticket an das Data-Warehouse- und Business-Intelligence-Team weitergeleitet werden, da es sich um eine Anfrage zur Erweiterung einer Datenquelle in Power BI handelt. \n\nDas Team sollte zunächst kontaktieren, um die genauen Anforderungen an die zusätzlichen Daten (Verkaufsbuchungen) zu klären. Dabei sollten folgende Punkte abgeklärt werden: \n\n1. Welche spezifischen Datenfelder der Verkaufsbuchungen werden benötigt? \n2. Gibt es bereits eine bestehende Datenquelle, die diese Informationen enthält, oder muss eine neue Schnittstelle erstellt werden? \n3. Wie dringend ist die Erweiterung, und gibt es Abhängigkeiten zu anderen Projekten oder Berichten? \n\nNach der Klärung der Anforderungen sollte das Team eine Einschätzung des Aufwands und der Umsetzungsdauer vornehmen. Diese Informationen sollten dann an den Anfragesteller zurückgemeldet werden, um realistische Erwartungen zu setzen. Falls technische oder organisatorische Hürden bestehen, sollten diese ebenfalls kommuniziert werden. \n\nParallel dazu sollte geprüft werden, ob die gewünschten Daten bereits im Data Warehouse verfügbar sind oder ob Anpassungen an der ETL-Pipeline (Extract, Transform, Load) notwendig sind. Falls Änderungen an der Datenquelle erforderlich sind, sollten diese dokumentiert und in Abstimmung mit anderen betroffenen Teams umgesetzt werden.' reasoning="1. **Ticket-Typ (change_request):** Die Anfrage zielt darauf ab, eine bestehende Datenquelle in Power BI zu erweitern, was einer Änderung der IT-Umgebung entspricht. Es handelt sich nicht um einen Vorfall (incident) oder ein Problem (problem), da keine Störung vorliegt, sondern um eine geplante Erweiterung. Auch ist es keine reine Serviceanfrage (service_request), da hier eine Modifikation der Datenquelle erforderlich ist. \n\n2. **Priorität (medium):** Die Anfrage betrifft eine spezifische Erweiterung für einen Power BI-Bericht, die für die KORE-Abteilung relevant ist. Es gibt keine Hinweise darauf, dass die gesamte Organisation oder eine größere Anzahl von Mitarbeitenden betroffen ist. Daher ist die Priorität als 'medium' einzustufen, da es sich um eine geplante Änderung handelt, die nicht dringend ist. \n\n3. **Sentiment (neutral):** Der Ton des Tickets ist sachlich und höflich. Es gibt keine Anzeichen von Unzufriedenheit oder Dringlichkeit, aber auch keine explizite Zufriedenheit. Daher wird das Sentiment als 'neutral' bewertet. \n\n4. **Tags (software):** Die Anfrage betrifft die Erweiterung einer Datenquelle in Power BI, was klar im Bereich der Software liegt. Es gibt keine Hinweise auf Hardware-, Netzwerk- oder Druckerprobleme, und es handelt sich nicht um Onboarding- oder Offboarding-Prozesse. \n\n5. **Verantwortliches Team (datawarehouse_businessintelligence_team):** Da es sich um eine Änderung an einer Datenquelle in Power BI handelt, ist das Data-Warehouse- und Business-Intelligence-Team zuständig. Dieses Team ist spezialisiert auf Datenquellen, ETL-Prozesse und Business-Intelligence-Tools wie Power BI. \n\n6. **Confidence Score (0.95):** Die Klassifizierung ist sehr sicher, da die Anfrage klar und präzise ist und alle relevanten Informationen für eine Einordnung enthält. Es gibt keine Ambivalenzen oder unklare Aspekte im Ticket."
+2025-08-28 22:29:53,119 - DEBUG - pydanticai_mistral-medium-2508 - Ticket: {
+  "id": "TKT-005",
+  "subject": "Power BI Bericht Datenquelle erweitern",
+  "body": "Wir brauchen zusätzliche Daten in der Datenquelle für unseren KORE Power BI Bericht.\n        Die benötigten Buchungen sind die Verkaufsbuchungen. Bitte um Rückmeldung wie bald ihr das umsetzen könnt.\n        Für weitere Fragen meldet euch in der KORE Abteilung. Danke.",
+  "status": "open",
+  "assigned_to": "datawarehouse_businessintelligence_team",
+  "classification": {
+    "ticket_type": "change_request",
+    "ticket_priority": "medium",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "software"
+    ],
+    "responsible_team": "datawarehouse_businessintelligence_team",
+    "confidence_score": 0.95,
+    "suggested_action": "Als ersten Schritt sollte das Ticket an das Data-Warehouse- und Business-Intelligence-Team weitergeleitet werden, da es sich um eine Anfrage zur Erweiterung einer Datenquelle in Power BI handelt. \n\nDas Team sollte zunächst kontaktieren, um die genauen Anforderungen an die zusätzlichen Daten (Verkaufsbuchungen) zu klären. Dabei sollten folgende Punkte abgeklärt werden: \n\n1. Welche spezifischen Datenfelder der Verkaufsbuchungen werden benötigt? \n2. Gibt es bereits eine bestehende Datenquelle, die diese Informationen enthält, oder muss eine neue Schnittstelle erstellt werden? \n3. Wie dringend ist die Erweiterung, und gibt es Abhängigkeiten zu anderen Projekten oder Berichten? \n\nNach der Klärung der Anforderungen sollte das Team eine Einschätzung des Aufwands und der Umsetzungsdauer vornehmen. Diese Informationen sollten dann an den Anfragesteller zurückgemeldet werden, um realistische Erwartungen zu setzen. Falls technische oder organisatorische Hürden bestehen, sollten diese ebenfalls kommuniziert werden. \n\nParallel dazu sollte geprüft werden, ob die gewünschten Daten bereits im Data Warehouse verfügbar sind oder ob Anpassungen an der ETL-Pipeline (Extract, Transform, Load) notwendig sind. Falls Änderungen an der Datenquelle erforderlich sind, sollten diese dokumentiert und in Abstimmung mit anderen betroffenen Teams umgesetzt werden.",
+    "reasoning": "1. **Ticket-Typ (change_request):** Die Anfrage zielt darauf ab, eine bestehende Datenquelle in Power BI zu erweitern, was einer Änderung der IT-Umgebung entspricht. Es handelt sich nicht um einen Vorfall (incident) oder ein Problem (problem), da keine Störung vorliegt, sondern um eine geplante Erweiterung. Auch ist es keine reine Serviceanfrage (service_request), da hier eine Modifikation der Datenquelle erforderlich ist. \n\n2. **Priorität (medium):** Die Anfrage betrifft eine spezifische Erweiterung für einen Power BI-Bericht, die für die KORE-Abteilung relevant ist. Es gibt keine Hinweise darauf, dass die gesamte Organisation oder eine größere Anzahl von Mitarbeitenden betroffen ist. Daher ist die Priorität als 'medium' einzustufen, da es sich um eine geplante Änderung handelt, die nicht dringend ist. \n\n3. **Sentiment (neutral):** Der Ton des Tickets ist sachlich und höflich. Es gibt keine Anzeichen von Unzufriedenheit oder Dringlichkeit, aber auch keine explizite Zufriedenheit. Daher wird das Sentiment als 'neutral' bewertet. \n\n4. **Tags (software):** Die Anfrage betrifft die Erweiterung einer Datenquelle in Power BI, was klar im Bereich der Software liegt. Es gibt keine Hinweise auf Hardware-, Netzwerk- oder Druckerprobleme, und es handelt sich nicht um Onboarding- oder Offboarding-Prozesse. \n\n5. **Verantwortliches Team (datawarehouse_businessintelligence_team):** Da es sich um eine Änderung an einer Datenquelle in Power BI handelt, ist das Data-Warehouse- und Business-Intelligence-Team zuständig. Dieses Team ist spezialisiert auf Datenquellen, ETL-Prozesse und Business-Intelligence-Tools wie Power BI. \n\n6. **Confidence Score (0.95):** Die Klassifizierung ist sehr sicher, da die Anfrage klar und präzise ist und alle relevanten Informationen für eine Einordnung enthält. Es gibt keine Ambivalenzen oder unklare Aspekte im Ticket."
+  }
+}
+2025-08-28 22:29:53,120 - INFO - pydanticai_mistral-medium-2508 - TKT-005: Evaluation score: 5
+2025-08-28 22:29:53,121 - INFO - pydanticai_mistral-medium-2508 - TKT-006: Start processing ticket event...
+2025-08-28 22:29:53,122 - DEBUG - pydanticai_mistral-medium-2508 - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction                 but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment,                 such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents.                 It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service.                 Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major                 business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for                 significant impact for one or a few employees)
+   - medium (Standard issues that can be scheduled for regular handling,                 it's the default priority level)
+   - low (Minor issues or requests that can be handled when convenient.                 The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components (computers, phones, laptops, servers), except printers)
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+2025-08-28 22:29:53,123 - DEBUG - pydanticai_mistral-medium-2508 - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: Drucker übersiedeln vom IT Büro ins QM Büro
+Ticket body: Wie letztens besprochen, möchten wir den Drucker aus dem IT Büro ins QM Büro stellen.
+        Bitte bei Gelegenheit alles vorbereiten und durchführen.
+        
+
+2025-08-28 22:30:04,465 - DEBUG - pydanticai_mistral-medium-2508 - Ticket classification: ticket_type=<TicketType.CHANGE_REQUEST: 'change_request'> ticket_priority=<TicketPriority.MEDIUM: 'medium'> ticket_sentiment=<TicketSentiment.NEUTRAL: 'neutral'> ticket_tags=[<TicketTags.PRINTING: 'printing'>] responsible_team=<ResponsibleTeam.HARDWARE_NETWORK_TEAM: 'hardware_network_team'> confidence_score=0.95 suggested_action='Als ersten Schritt sollte der IT-Helpdesk den genauen Standort des Druckers im IT-Büro und den neuen Standort im QM-Büro bestätigen. Anschließend sollte geprüft werden, ob der neue Standort über die notwendigen Anschlüsse (Strom, Netzwerk) verfügt. Falls nicht, müssen diese vorbereitet werden. Der Drucker sollte vor dem Umzug auf seine Funktionalität überprüft werden, um sicherzustellen, dass er nach dem Umzug sofort einsatzbereit ist. Der Umzug selbst sollte in Absprache mit den betroffenen Abteilungen (IT und QM) koordiniert werden, um mögliche Störungen im Arbeitsablauf zu minimieren. Nach dem Umzug sollte der Drucker erneut getestet werden, um sicherzustellen, dass er ordnungsgemäß funktioniert und im Netzwerk erreichbar ist.' reasoning='1. **Ticket-Typ (change_request)**: Der Ticketinhalt beschreibt eine geplante Änderung der IT-Infrastruktur, nämlich die Verlegung eines Druckers von einem Büro in ein anderes. Dies entspricht der Definition eines "change_request", da es sich um eine formelle Anfrage zur Modifikation der IT-Umgebung handelt. \n\n2. **Priorität (medium)**: Die Anfrage ist nicht dringend, da der Umzug des Druckers keine unmittelbare Auswirkung auf die Geschäftsprozesse hat. Es handelt sich um eine Standardanfrage, die geplant und koordiniert werden kann, ohne dass es zu einer Unterbrechung kommt. Daher ist die Priorität "medium" angemessen. \n\n3. **Sentiment (neutral)**: Der Ton des Tickets ist sachlich und enthält keine Anzeichen von Unzufriedenheit oder Dringlichkeit. Es wird lediglich eine geplante Aktion beschrieben, ohne emotionale Färbung. \n\n4. **Tags (printing)**: Der Hauptgegenstand des Tickets ist ein Drucker, daher ist das Tag "printing" passend. Andere Tags wie "hardware" oder "network" wären zwar indirekt relevant, aber der Fokus liegt klar auf dem Drucker und dessen Umzug. \n\n5. **Verantwortliches Team (hardware_network_team)**: Da es sich um den physischen Umzug eines Druckers handelt, ist das Team für Hardware und Netzwerk zuständig. Dieses Team kann sicherstellen, dass der Drucker korrekt angeschlossen und im Netzwerk konfiguriert wird. \n\n6. **Confidence Score (0.95)**: Die Klassifizierung ist sehr klar, da der Ticketinhalt präzise und eindeutig ist. Es gibt kaum Raum für Interpretationsfehler, was die hohe Confidence Score rechtfertigt.'
+2025-08-28 22:30:04,470 - DEBUG - pydanticai_mistral-medium-2508 - Ticket: {
+  "id": "TKT-006",
+  "subject": "Drucker übersiedeln vom IT Büro ins QM Büro",
+  "body": "Wie letztens besprochen, möchten wir den Drucker aus dem IT Büro ins QM Büro stellen.\n        Bitte bei Gelegenheit alles vorbereiten und durchführen.\n        ",
+  "status": "open",
+  "assigned_to": "hardware_network_team",
+  "classification": {
+    "ticket_type": "change_request",
+    "ticket_priority": "medium",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "printing"
+    ],
+    "responsible_team": "hardware_network_team",
+    "confidence_score": 0.95,
+    "suggested_action": "Als ersten Schritt sollte der IT-Helpdesk den genauen Standort des Druckers im IT-Büro und den neuen Standort im QM-Büro bestätigen. Anschließend sollte geprüft werden, ob der neue Standort über die notwendigen Anschlüsse (Strom, Netzwerk) verfügt. Falls nicht, müssen diese vorbereitet werden. Der Drucker sollte vor dem Umzug auf seine Funktionalität überprüft werden, um sicherzustellen, dass er nach dem Umzug sofort einsatzbereit ist. Der Umzug selbst sollte in Absprache mit den betroffenen Abteilungen (IT und QM) koordiniert werden, um mögliche Störungen im Arbeitsablauf zu minimieren. Nach dem Umzug sollte der Drucker erneut getestet werden, um sicherzustellen, dass er ordnungsgemäß funktioniert und im Netzwerk erreichbar ist.",
+    "reasoning": "1. **Ticket-Typ (change_request)**: Der Ticketinhalt beschreibt eine geplante Änderung der IT-Infrastruktur, nämlich die Verlegung eines Druckers von einem Büro in ein anderes. Dies entspricht der Definition eines \"change_request\", da es sich um eine formelle Anfrage zur Modifikation der IT-Umgebung handelt. \n\n2. **Priorität (medium)**: Die Anfrage ist nicht dringend, da der Umzug des Druckers keine unmittelbare Auswirkung auf die Geschäftsprozesse hat. Es handelt sich um eine Standardanfrage, die geplant und koordiniert werden kann, ohne dass es zu einer Unterbrechung kommt. Daher ist die Priorität \"medium\" angemessen. \n\n3. **Sentiment (neutral)**: Der Ton des Tickets ist sachlich und enthält keine Anzeichen von Unzufriedenheit oder Dringlichkeit. Es wird lediglich eine geplante Aktion beschrieben, ohne emotionale Färbung. \n\n4. **Tags (printing)**: Der Hauptgegenstand des Tickets ist ein Drucker, daher ist das Tag \"printing\" passend. Andere Tags wie \"hardware\" oder \"network\" wären zwar indirekt relevant, aber der Fokus liegt klar auf dem Drucker und dessen Umzug. \n\n5. **Verantwortliches Team (hardware_network_team)**: Da es sich um den physischen Umzug eines Druckers handelt, ist das Team für Hardware und Netzwerk zuständig. Dieses Team kann sicherstellen, dass der Drucker korrekt angeschlossen und im Netzwerk konfiguriert wird. \n\n6. **Confidence Score (0.95)**: Die Klassifizierung ist sehr klar, da der Ticketinhalt präzise und eindeutig ist. Es gibt kaum Raum für Interpretationsfehler, was die hohe Confidence Score rechtfertigt."
+  }
+}
+2025-08-28 22:30:04,470 - WARNING - pydanticai_mistral-medium-2508 - TKT-006: Discrepancy actual: TicketPriority.MEDIUM <> expected: TicketPriority.LOW
+2025-08-28 22:30:04,472 - INFO - pydanticai_mistral-medium-2508 - TKT-006: Evaluation score: 4
+2025-08-28 22:30:04,473 - INFO - pydanticai_mistral-medium-2508 - TKT-007: Start processing ticket event...
+2025-08-28 22:30:04,474 - DEBUG - pydanticai_mistral-medium-2508 - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction                 but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment,                 such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents.                 It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service.                 Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major                 business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for                 significant impact for one or a few employees)
+   - medium (Standard issues that can be scheduled for regular handling,                 it's the default priority level)
+   - low (Minor issues or requests that can be handled when convenient.                 The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components (computers, phones, laptops, servers), except printers)
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+2025-08-28 22:30:04,474 - DEBUG - pydanticai_mistral-medium-2508 - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: Handy Display kaputt
+Ticket body: Hallo IT, mein Firmenhandy ist auf den Boden gefallen und jetzt ist das Display kaputt.
+        Es hat mehrere Risse und funktioniert nicht mehr richtig. Ich brauche bitte ein Ersatzgerät.
+        
+
+2025-08-28 22:30:18,241 - DEBUG - pydanticai_mistral-medium-2508 - Ticket classification: ticket_type=<TicketType.INCIDENT: 'incident'> ticket_priority=<TicketPriority.HIGH: 'high'> ticket_sentiment=<TicketSentiment.NEUTRAL: 'neutral'> ticket_tags=[<TicketTags.HARDWARE: 'hardware'>] responsible_team=<ResponsibleTeam.HARDWARE_NETWORK_TEAM: 'hardware_network_team'> confidence_score=0.95 suggested_action='Als ersten Schritt sollte der IT-Support den Vorfall bestätigen und den Nutzer darüber informieren, dass ein Ersatzgerät organisiert wird. Da es sich um ein defektes Display handelt, das die Nutzung des Geräts stark einschränkt, ist eine schnelle Reaktion erforderlich. Der Nutzer sollte gebeten werden, das defekte Gerät an den IT-Support zu übergeben, sobald das Ersatzgerät bereitsteht. Gleichzeitig sollte geprüft werden, ob eine Reparatur des defekten Geräts möglich oder wirtschaftlich sinnvoll ist. Falls nicht, sollte das Gerät als defekt markiert und entsorgt oder recycelt werden. Der Nutzer sollte über den weiteren Prozess informiert werden, insbesondere über den Zeitpunkt, wann das Ersatzgerät verfügbar sein wird.' reasoning="1. **Ticket-Typ (incident)**: Es handelt sich um eine unplanmäßige Unterbrechung der Nutzung eines IT-Geräts (Firmenhandy), was die Definition eines Incidents erfüllt. Der Nutzer kann das Gerät aufgrund des defekten Displays nicht mehr richtig nutzen, was eine schnelle Lösung erfordert.\n\n2. **Priorität (high)**: Das Problem betrifft ein einzelnes Gerät, das für den Nutzer jedoch essenziell sein könnte (z. B. für die tägliche Arbeit). Da der Nutzer das Gerät nicht mehr nutzen kann, ist die Priorität hoch, aber nicht kritisch, da nicht das gesamte Unternehmen betroffen ist.\n\n3. **Sentiment (neutral)**: Der Nutzer beschreibt das Problem sachlich, ohne erkennbare Emotionen wie Frustration oder Wut. Es gibt keine Anzeichen für ein positives oder negatives Sentiment.\n\n4. **Tags (hardware)**: Das Problem betrifft ein physisches Gerät (Handy), das aufgrund eines Defekts (Display) nicht mehr funktioniert. Daher ist das Tag 'hardware' passend.\n\n5. **Verantwortliches Team (hardware_network_team)**: Da es sich um ein Hardware-Problem handelt, ist das Team für Hardware und Netzwerk zuständig. Dieses Team kann Ersatzgeräte organisieren und defekte Geräte reparieren oder ersetzen.\n\n6. **Confidence Score (0.95)**: Die Klassifizierung ist sehr klar, da alle Informationen im Ticket eindeutig sind. Es gibt keine Zweifel an der Einordnung des Problems oder der Priorität."
+2025-08-28 22:30:18,245 - DEBUG - pydanticai_mistral-medium-2508 - Ticket: {
+  "id": "TKT-007",
+  "subject": "Handy Display kaputt",
+  "body": "Hallo IT, mein Firmenhandy ist auf den Boden gefallen und jetzt ist das Display kaputt.\n        Es hat mehrere Risse und funktioniert nicht mehr richtig. Ich brauche bitte ein Ersatzgerät.\n        ",
+  "status": "open",
+  "assigned_to": "hardware_network_team",
+  "classification": {
+    "ticket_type": "incident",
+    "ticket_priority": "high",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "hardware"
+    ],
+    "responsible_team": "hardware_network_team",
+    "confidence_score": 0.95,
+    "suggested_action": "Als ersten Schritt sollte der IT-Support den Vorfall bestätigen und den Nutzer darüber informieren, dass ein Ersatzgerät organisiert wird. Da es sich um ein defektes Display handelt, das die Nutzung des Geräts stark einschränkt, ist eine schnelle Reaktion erforderlich. Der Nutzer sollte gebeten werden, das defekte Gerät an den IT-Support zu übergeben, sobald das Ersatzgerät bereitsteht. Gleichzeitig sollte geprüft werden, ob eine Reparatur des defekten Geräts möglich oder wirtschaftlich sinnvoll ist. Falls nicht, sollte das Gerät als defekt markiert und entsorgt oder recycelt werden. Der Nutzer sollte über den weiteren Prozess informiert werden, insbesondere über den Zeitpunkt, wann das Ersatzgerät verfügbar sein wird.",
+    "reasoning": "1. **Ticket-Typ (incident)**: Es handelt sich um eine unplanmäßige Unterbrechung der Nutzung eines IT-Geräts (Firmenhandy), was die Definition eines Incidents erfüllt. Der Nutzer kann das Gerät aufgrund des defekten Displays nicht mehr richtig nutzen, was eine schnelle Lösung erfordert.\n\n2. **Priorität (high)**: Das Problem betrifft ein einzelnes Gerät, das für den Nutzer jedoch essenziell sein könnte (z. B. für die tägliche Arbeit). Da der Nutzer das Gerät nicht mehr nutzen kann, ist die Priorität hoch, aber nicht kritisch, da nicht das gesamte Unternehmen betroffen ist.\n\n3. **Sentiment (neutral)**: Der Nutzer beschreibt das Problem sachlich, ohne erkennbare Emotionen wie Frustration oder Wut. Es gibt keine Anzeichen für ein positives oder negatives Sentiment.\n\n4. **Tags (hardware)**: Das Problem betrifft ein physisches Gerät (Handy), das aufgrund eines Defekts (Display) nicht mehr funktioniert. Daher ist das Tag 'hardware' passend.\n\n5. **Verantwortliches Team (hardware_network_team)**: Da es sich um ein Hardware-Problem handelt, ist das Team für Hardware und Netzwerk zuständig. Dieses Team kann Ersatzgeräte organisieren und defekte Geräte reparieren oder ersetzen.\n\n6. **Confidence Score (0.95)**: Die Klassifizierung ist sehr klar, da alle Informationen im Ticket eindeutig sind. Es gibt keine Zweifel an der Einordnung des Problems oder der Priorität."
+  }
+}
+2025-08-28 22:30:18,246 - WARNING - pydanticai_mistral-medium-2508 - TKT-007: Discrepancy actual: TicketType.INCIDENT <> expected: TicketType.SERVICE_REQUEST
+2025-08-28 22:30:18,247 - INFO - pydanticai_mistral-medium-2508 - TKT-007: Evaluation score: 4
+2025-08-28 22:30:18,248 - INFO - pydanticai_mistral-medium-2508 - Experiment completed.

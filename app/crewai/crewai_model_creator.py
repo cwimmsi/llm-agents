@@ -11,23 +11,18 @@ def model_creator(model: Model):
 
     if model.provider == ModelProvider.OLLAMA:
         llm = LLM(
-            model=f"ollama/{model.get_name_value()}",
+            model=f"{model.get_provider_value()}/{model.get_name_value()}",
             base_url="http://localhost:11434",
             temperature=temperature,
         )
-    elif model.provider == ModelProvider.MISTRALAI:
+    elif model.provider == ModelProvider.MISTRAL:
         llm = LLM(
-            model=f"mistral/{model.get_name_value()}",
+            model=f"{model.get_provider_value()}/{model.get_name_value()}",
             temperature=temperature,
         )
     elif model.provider == ModelProvider.OPENAI:
         llm = LLM(
-            model=f"openai/{model.get_name_value()}",
-            temperature=temperature,
-        )
-    elif model.provider == ModelProvider.GOOGLEGENAI:
-        llm = LLM(
-            model=f"gemini/{model.get_name_value()}",
+            model=f"{model.get_provider_value()}/{model.get_name_value()}",
             temperature=temperature,
         )
     else:

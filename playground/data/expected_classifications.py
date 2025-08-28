@@ -52,7 +52,7 @@ EXPECTED_CLASSIFICATIONS: Dict[int, TicketClassification] = {
     ),
     6: TicketClassification(
         ticket_type=TicketType.CHANGE_REQUEST,
-        ticket_priority=TicketPriority.MEDIUM,
+        ticket_priority=TicketPriority.LOW,
         ticket_sentiment=TicketSentiment.NEUTRAL,
         ticket_tags=[TicketTags.PRINTING],
         responsible_team=ResponsibleTeam.HARDWARE_NETWORK_TEAM,

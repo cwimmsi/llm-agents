@@ -3,7 +3,6 @@ from dotenv import load_dotenv
 from langchain_ollama.chat_models import ChatOllama
 from langchain_mistralai.chat_models import ChatMistralAI
 from langchain_openai.chat_models import ChatOpenAI
-from langchain_google_genai.chat_models import ChatGoogleGenerativeAI
 from playground.data.models import get_default_model
 from utils.model import Model, ModelProvider
 from utils.logger import setup_logger
@@ -21,21 +20,15 @@ def model_creator(model: Model):
             model=model.get_name_value(),
             temperature=temperature,
         )
-    elif model.provider == ModelProvider.MISTRALAI:
+    elif model.provider == ModelProvider.MISTRAL:
         llm = ChatMistralAI(
-            api_key=os.environ.get("MISTRALAI_API_KEY"),
+            api_key=os.environ.get("MISTRAL_API_KEY"),
             model=model.get_name_value(),
             temperature=temperature,
         )
     elif model.provider == ModelProvider.OPENAI:
         llm = ChatOpenAI(
             api_key=os.environ.get("OPENAI_API_KEY"),
-            model=model.get_name_value(),
-            temperature=temperature,
-        )
-    elif model.provider == ModelProvider.GOOGLEGENAI:
-        llm = ChatGoogleGenerativeAI(
-            api_key=os.environ.get("GOOGLEGENAI_API_KEY"),
             model=model.get_name_value(),
             temperature=temperature,
         )
