@@ -14,10 +14,14 @@ class TicketType(str, Enum):
     @property
     def description(self) -> str:
         descriptions = {
-            self.SERVICE_REQUEST: "Formal user request for information, advice, standard change, or access to services",
-            self.CHANGE_REQUEST: "Formal proposal to modify existing IT infrastructure, applications, or services",
-            self.PROBLEM: "Underlying cause of one or more incidents requiring root cause analysis",
-            self.INCIDENT: "Unplanned interruption or reduction in quality of an IT service",
+            self.SERVICE_REQUEST: "Routine, planned user requests that do not indicate a malfunction \
+                but require IT assistance. Examples are requests for new hardware, software, access to applications.",
+            self.CHANGE_REQUEST: "Formal proposal for modifications to any aspect of the IT environment, \
+                such as software updates, hardware replacements, configuration changes or application changes.",
+            self.PROBLEM: "Used when investigating the underlying cause of one or more incidents. \
+                It aims to analyze root causes and prevent recurrence.",
+            self.INCIDENT: "Unplanned interruption or reduction in quality of an IT service. \
+                Restore normal service as quickly as possible.",
         }
         return descriptions[self]
 
@@ -33,10 +37,14 @@ class TicketPriority(str, Enum):
     @property
     def description(self) -> str:
         descriptions = {
-            self.CRITICAL: "Urgent issues needing immediate attention, causing major business disruption for the entire company",
-            self.HIGH: "Important issues to be addressed soon, potential for significant impact for one or a few employees",
-            self.MEDIUM: "Standard issues that can be scheduled for regular handling, it's the default priority level",
-            self.LOW: "Minor issues or requests that can be handled when convenient",
+            self.CRITICAL: "Urgent issues needing immediate attention, causing major \
+                business disruption for the entire company or a larger amount of people.",
+            self.HIGH: "Important issues to be addressed soon, potential for \
+                significant impact for one or a few employees",
+            self.MEDIUM: "Standard issues that can be scheduled for regular handling, \
+                it's the default priority level",
+            self.LOW: "Minor issues or requests that can be handled when convenient. \
+                The employee is not blocked by this issue.",
         }
         return descriptions[self]
 
@@ -90,20 +98,18 @@ class TicketTags(str, Enum):
     SOFTWARE = "software"
     NETWORK = "network"
     PRINTING = "printing"
-    SECURITY = "security"
     ONBOARDING = "onboarding"
     OFFBOARDING = "offboarding"
 
     @property
     def description(self) -> str:
         descriptions = {
-            self.HARDWARE: "Issues with physical components (computers, phones, laptops, servers, peripherals)",
-            self.SOFTWARE: "Issues with applications, operating systems, and software updates",
+            self.HARDWARE: "Issues with physical components (computers, phones, laptops, servers), except printers",
+            self.SOFTWARE: "Issues with any applications, operating systems, and software",
             self.NETWORK: "Network-related issues including LAN, WAN, WiFi, and VPN",
             self.PRINTING: "Issues with printers, print servers, and scanning",
-            self.SECURITY: "Issues with security tools, password manager, access, and compliance",
-            self.ONBOARDING: "Issues related to employee onboarding processes",
-            self.OFFBOARDING: "Issues related to employee offboarding processes",
+            self.ONBOARDING: "Issues related to employee onboarding processes (e.g. new employee)",
+            self.OFFBOARDING: "Issues related to employee offboarding processes (e.g. employee leaving)",
         }
         return descriptions[self]
 
@@ -112,8 +118,8 @@ class ResponsibleTeam(str, Enum):
     """Defines the team responsible for handling the ticket."""
 
     IT_SUPPORT = "it_support"
-    INFRASTRUCTURE_TEAM = "infrastructure_team"
-    APPLICATION_TEAM = "application_team"
+    HARDWARE_NETWORK_TEAM = "hardware_network_team"
+    SOFTWARE_TEAM = "software_team"
     ERP_TEAM = "erp_team"
     DWH_BI_TEAM = "datawarehouse_businessintelligence_team"
 
@@ -121,8 +127,8 @@ class ResponsibleTeam(str, Enum):
     def description(self) -> str:
         descriptions = {
             self.IT_SUPPORT: "First level support team handling general IT issues, ticket triage, employee onboarding and offboarding",
-            self.INFRASTRUCTURE_TEAM: "Specialized team for hardware, network, and infrastructure issues",
-            self.APPLICATION_TEAM: "Specialized team responsible for software applications and related issues",
+            self.HARDWARE_NETWORK_TEAM: "Specialized team for hardware, network, and infrastructure issues",
+            self.SOFTWARE_TEAM: "Specialized team responsible for software applications and related issues",
             self.ERP_TEAM: "Specialized team for Dynamics 365 Business Central and ERP related issues only",
             self.DWH_BI_TEAM: "Specialized team managing data warehouse and business intelligence tools like PowerBI",
         }

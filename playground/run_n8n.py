@@ -2,7 +2,7 @@ import httpx
 from playground.data.tickets import get_ticket_by_id
 from playground.data.models import get_default_model
 from playground.data.expected_classifications import get_expected_classification
-from playground.data.evaluate_classification import evaluate_classification
+from playground.evaluate_classification import evaluate_classification
 from utils.model import Model
 from utils.ticket import Ticket, TicketClassification
 from utils.logger import setup_logger

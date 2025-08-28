@@ -6,14 +6,14 @@ TICKET_DATASET: Dict[int, Ticket] = {
     1: Ticket(
         id="TKT-001",
         subject="WLAN ausgefallen",
-        body="""Ich und meine Team habe kein Internet. Weder auf dem Laptop noch auf dem Handy. 
+        body="""Ich und mein Team haben kein Internet. Weder auf dem Laptop noch auf dem Handy. 
         Bei unseren Kollegen im anderen Gebäude funktioniert es auch nicht. Bitte um schnelle Behebung des Problems!
         Wir müssen dringend Rechnungen versenden.""",
     ),
     2: Ticket(
         id="TKT-002",
-        subject="OneDrive Sync Problem",
-        body="""Wenn ich eine Datei im Explorer im OneDrive öffne, kommt die Fehlermeldung, dass der Dateipfad zu lang ist.""",
+        subject="OneDrive Datei kann nicht geöffnet werden",
+        body="""Wenn ich eine Datei in OneDrive lokal öffne, kommt die Fehlermeldung, dass der Dateipfad zu lang ist.""",
     ),
     3: Ticket(
         id="TKT-003",
@@ -29,15 +29,23 @@ TICKET_DATASET: Dict[int, Ticket] = {
     ),
     5: Ticket(
         id="TKT-005",
-        subject="Power BI Zugang",
-        body="""Wenn ich unseren KORE Power BI Bericht öffnen will, kommt die Meldung, dass ich keine Lizenz habe.
-        Letzte Woche hat es noch funktioniert. Bitte um schnelle Hilfe!""",
+        subject="Power BI Bericht Datenquelle erweitern",
+        body="""Wir brauchen zusätzliche Daten in der Datenquelle für unseren KORE Power BI Bericht.
+        Die benötigten Buchungen sind die Verkaufsbuchungen. Bitte um Rückmeldung wie bald ihr das umsetzen könnt.
+        Für weitere Fragen meldet euch in der KORE Abteilung. Danke.""",
     ),
     6: Ticket(
         id="TKT-006",
         subject="Drucker übersiedeln vom IT Büro ins QM Büro",
-        body="""Wie letztens kurz besprochen, möchten wir den Drucker aus dem IT Büro ins QM Büro stellen.
+        body="""Wie letztens besprochen, möchten wir den Drucker aus dem IT Büro ins QM Büro stellen.
         Bitte bei Gelegenheit alles vorbereiten und durchführen.
+        """,
+    ),
+    7: Ticket(
+        id="TKT-007",
+        subject="Handy Display kaputt",
+        body="""Hallo IT, mein Firmenhandy ist auf den Boden gefallen und jetzt ist das Display kaputt.
+        Es hat mehrere Risse und funktioniert nicht mehr richtig. Ich brauche bitte ein Ersatzgerät.
         """,
     ),
 }
