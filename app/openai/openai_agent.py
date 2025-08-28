@@ -1,6 +1,7 @@
 from agents import Agent, Runner, ModelSettings
 from app.openai.openai_model_creator import model_creator
-from prompts.ticket_prompt import get_prompt_by_version_id
+from prompts.system_prompt import get_system_prompt
+from prompts.user_prompt import get_user_prompt
 from utils.model import Model
 from utils.ticket import Ticket, TicketClassification
 from utils.logger import setup_logger
@@ -8,31 +9,33 @@ from utils.logger import setup_logger
 logger = setup_logger()
 
 
-def classify_ticket(ticket: Ticket, prompt_id: int, model: Model) -> Ticket:
-    prompt_template = get_prompt_by_version_id(prompt_id)
-    logger.debug(f"Using prompt template: {prompt_template}")
+async def classify_ticket(ticket: Ticket, model: Model) -> Ticket:
+    system_prompt = get_system_prompt()
+    user_prompt = get_user_prompt()
+    user_prompt = user_prompt.format(subject=ticket.subject, body=ticket.body)
 
-    prompt = prompt_template.format(
-        subject=ticket.subject, body=ticket.body, output_format_instructions=""
-    )
+    logger.debug(f"Using system prompt template: {system_prompt}")
+    logger.debug(f"Using user prompt template: {user_prompt}")
 
     llm = model_creator(model)
 
     agent = Agent(
-        name="ticket_classifier",
-        instructions=prompt,
-        output_type=TicketClassification,
+        name="Ticket classifier agent",
         model=llm,
-        model_settings=ModelSettings(temperature=0.1),
+        model_settings=ModelSettings(temperature=0.0),
+        instructions=system_prompt,
+        output_type=TicketClassification,
     )
 
     try:
-        response = Runner.run_sync(agent, "")
+        # use asynchronous call
+        response = await Runner.run(agent, user_prompt)
+        # retrieve ticket classification object
         ticket_classification = response.final_output
         logger.debug(f"Ticket classification: {ticket_classification}")
-
+        # set classification on ticket object
         ticket.set_classification(ticket_classification)
-        return ticket
     except Exception as e:
         logger.error(f"Error in classify_ticket: {str(e)}")
-        raise
+
+    return ticket

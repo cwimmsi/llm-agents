@@ -1,4 +1,19 @@
 import logging
+from colorama import Fore, Style
+
+
+class ColorFormatter(logging.Formatter):
+    COLORS = {
+        logging.DEBUG: Fore.BLUE,
+        logging.INFO: Fore.GREEN,
+        logging.WARNING: Fore.YELLOW,
+        logging.ERROR: Fore.RED,
+    }
+
+    def format(self, record):
+        color = self.COLORS.get(record.levelno, Fore.WHITE)
+        message = super().format(record)
+        return f"{color}{message}{Style.RESET_ALL}"
 
 
 def setup_logger() -> logging.Logger:
@@ -13,8 +28,8 @@ def setup_logger() -> logging.Logger:
         handler = logging.StreamHandler()
         handler.setLevel(logging.INFO)
 
-        # Create formatter
-        formatter = logging.Formatter("%(asctime)s - %(levelname)s - %(message)s")
+        # Create custom formatter
+        formatter = ColorFormatter("%(asctime)s - %(levelname)s - %(message)s")
         handler.setFormatter(formatter)
 
         # Add handler to logger

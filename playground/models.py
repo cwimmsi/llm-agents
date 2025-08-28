@@ -23,9 +23,6 @@ MODELS: Dict[ModelName, Model] = {
     ModelName.GPT_4_1_NANO: Model(
         provider=ModelProvider.OPENAI, name=ModelName.GPT_4_1_NANO
     ),
-    ModelName.GPT_5_NANO: Model(
-        provider=ModelProvider.OPENAI, name=ModelName.GPT_5_NANO
-    ),
     ModelName.GEMINI_2_5_FLASH: Model(
         provider=ModelProvider.GOOGLEGENAI, name=ModelName.GEMINI_2_5_FLASH
     ),

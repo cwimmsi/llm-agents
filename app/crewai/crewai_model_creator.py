@@ -1,36 +1,34 @@
-import os
-from dotenv import load_dotenv
 from crewai import LLM
 from playground.models import get_default_model
 from utils.model import Model, ModelProvider
 from utils.logger import setup_logger
 
-load_dotenv()
-
 logger = setup_logger()
 
 
 def model_creator(model: Model):
+    temperature = 0.0
+
     if model.provider == ModelProvider.OLLAMA:
         llm = LLM(
             model=f"ollama/{model.get_name_value()}",
             base_url="http://localhost:11434",
-            temperature=0.2,
+            temperature=temperature,
         )
     elif model.provider == ModelProvider.MISTRALAI:
         llm = LLM(
             model=f"mistral/{model.get_name_value()}",
-            temperature=0.2,
+            temperature=temperature,
         )
     elif model.provider == ModelProvider.OPENAI:
         llm = LLM(
             model=f"openai/{model.get_name_value()}",
-            temperature=0.2,
+            temperature=temperature,
         )
     elif model.provider == ModelProvider.GOOGLEGENAI:
         llm = LLM(
             model=f"gemini/{model.get_name_value()}",
-            temperature=0.2,
+            temperature=temperature,
         )
     else:
         logger.warning(f"Unsupported model provider: {model.provider}")
@@ -40,7 +38,7 @@ def model_creator(model: Model):
         )
         llm = LLM(
             model=f"openai/{model.get_name_value()}",
-            temperature=0.2,
+            temperature=temperature,
         )
 
     return llm

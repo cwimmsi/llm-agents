@@ -18,32 +18,32 @@ logger = setup_logger()
 
 
 def model_creator(model: Model):
-    common_model_settings = ModelSettings(temperature=0.2)
+    model_settings = ModelSettings(temperature=0.0)
 
     if model.provider == ModelProvider.OLLAMA:
         # there is no built in Ollama model, but it can be used via OpenAIModel implementation
         llm = OpenAIModel(
             provider=OllamaProvider(base_url="http://localhost:11434/v1"),
             model_name=model.get_name_value(),
-            settings=common_model_settings,
+            settings=model_settings,
         )
     elif model.provider == ModelProvider.MISTRALAI:
         llm = MistralModel(
             provider=MistralProvider(api_key=os.environ.get("MISTRALAI_API_KEY")),
             model_name=model.get_name_value(),
-            settings=common_model_settings,
+            settings=model_settings,
         )
     elif model.provider == ModelProvider.OPENAI:
         llm = OpenAIModel(
             provider=OpenAIProvider(api_key=os.environ.get("OPENAI_API_KEY")),
             model_name=model.get_name_value(),
-            settings=common_model_settings,
+            settings=model_settings,
         )
     elif model.provider == ModelProvider.GOOGLEGENAI:
         llm = GoogleModel(
             provider=GoogleProvider(api_key=os.environ.get("GOOGLEGENAI_API_KEY")),
             model_name=model.get_name_value(),
-            settings=common_model_settings,
+            settings=model_settings,
         )
     else:
         logger.warning(f"Unsupported model provider: {model.provider}")
@@ -54,7 +54,7 @@ def model_creator(model: Model):
         llm = OpenAIModel(
             provider=OpenAIProvider(api_key=os.environ.get("OPENAI_API_KEY")),
             model_name=model.get_name_value(),
-            settings=common_model_settings,
+            settings=model_settings,
         )
 
     return llm

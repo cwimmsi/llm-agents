@@ -1,7 +1,6 @@
 from pydantic import BaseModel, Field
 from typing import Optional, List
 from enum import Enum
-from datetime import datetime
 
 
 class TicketType(str, Enum):
@@ -16,27 +15,27 @@ class TicketType(str, Enum):
     def description(self) -> str:
         descriptions = {
             self.SERVICE_REQUEST: "Formal user request for information, advice, standard change, or access to services",
-            self.CHANGE_REQUEST: "Formal proposal to modify IT infrastructure, applications, or services",
+            self.CHANGE_REQUEST: "Formal proposal to modify existing IT infrastructure, applications, or services",
             self.PROBLEM: "Underlying cause of one or more incidents requiring root cause analysis",
             self.INCIDENT: "Unplanned interruption or reduction in quality of an IT service",
         }
         return descriptions[self]
 
 
-class TicketPriority(int, Enum):
+class TicketPriority(str, Enum):
     """Defines ticket priority levels due to issue impact and urgency."""
 
-    CRITICAL = 1
-    HIGH = 2
-    MEDIUM = 3
-    LOW = 4
+    CRITICAL = "critical"
+    HIGH = "high"
+    MEDIUM = "medium"
+    LOW = "low"
 
     @property
     def description(self) -> str:
         descriptions = {
-            self.CRITICAL: "Urgent issues needing immediate attention, causing major business disruption",
-            self.HIGH: "Important issues to be addressed soon, potential for significant impact",
-            self.MEDIUM: "Standard issues that can be scheduled for regular handling",
+            self.CRITICAL: "Urgent issues needing immediate attention, causing major business disruption for the entire company",
+            self.HIGH: "Important issues to be addressed soon, potential for significant impact for one or a few employees",
+            self.MEDIUM: "Standard issues that can be scheduled for regular handling, it's the default priority level",
             self.LOW: "Minor issues or requests that can be handled when convenient",
         }
         return descriptions[self]
@@ -60,7 +59,7 @@ class TicketSentiment(str, Enum):
 
 
 class TicketStatus(str, Enum):
-    """Defines the status of a ticket according to ITIL standards."""
+    """Defines the status of a ticket."""
 
     NEW = "new"
     REVIEW_BY_HUMAN = "review_by_human"
@@ -85,19 +84,15 @@ class TicketStatus(str, Enum):
 
 
 class TicketTags(str, Enum):
-    """Defines the area affected by the ticket."""
+    """Defines tags associated with the ticket for better categorization."""
 
     HARDWARE = "hardware"
     SOFTWARE = "software"
     NETWORK = "network"
-    ERP = "erp"
-    DWH_BI = "datawarehouse_businessintelligence"
-    SHAREPOINT = "sharepoint"
-    PLANNER = "planner"
-    TEAMS = "teams"
-    EMAIL = "email"
     PRINTING = "printing"
     SECURITY = "security"
+    ONBOARDING = "onboarding"
+    OFFBOARDING = "offboarding"
 
     @property
     def description(self) -> str:
@@ -105,14 +100,10 @@ class TicketTags(str, Enum):
             self.HARDWARE: "Issues with physical components (computers, phones, laptops, servers, peripherals)",
             self.SOFTWARE: "Issues with applications, operating systems, and software updates",
             self.NETWORK: "Network-related issues including LAN, WAN, WiFi, and VPN",
-            self.ERP: "Issues with Microsoft Dynamics 365 Business Central and other ERP systems",
-            self.DWH_BI: "Issues with data warehouse and PowerBI",
-            self.SHAREPOINT: "Issues with SharePoint sites, permissions, and content",
-            self.PLANNER: "Issues with Microsoft Planner tasks and boards",
-            self.TEAMS: "Issues with Microsoft Teams calls, chats, and meetings",
-            self.EMAIL: "Issues with Outlook, Calendar, Exchange, and email delivery",
             self.PRINTING: "Issues with printers, print servers, and scanning",
             self.SECURITY: "Issues with security tools, password manager, access, and compliance",
+            self.ONBOARDING: "Issues related to employee onboarding processes",
+            self.OFFBOARDING: "Issues related to employee offboarding processes",
         }
         return descriptions[self]
 
@@ -129,22 +120,17 @@ class ResponsibleTeam(str, Enum):
     @property
     def description(self) -> str:
         descriptions = {
-            self.IT_SUPPORT: "First level support team handling general IT issues and ticket triage",
-            self.INFRASTRUCTURE_TEAM: "Support team for hardware, network, and infrastructure issues",
-            self.APPLICATION_TEAM: "Team responsible for software applications and related issues",
-            self.ERP_TEAM: "Specialized team for Dynamics 365 Business Central and ERP related issues",
-            self.DWH_BI_TEAM: "Team managing data warehouse, ETL processes, and Business Intelligence tools like PowerBI",
+            self.IT_SUPPORT: "First level support team handling general IT issues, ticket triage, employee onboarding and offboarding",
+            self.INFRASTRUCTURE_TEAM: "Specialized team for hardware, network, and infrastructure issues",
+            self.APPLICATION_TEAM: "Specialized team responsible for software applications and related issues",
+            self.ERP_TEAM: "Specialized team for Dynamics 365 Business Central and ERP related issues only",
+            self.DWH_BI_TEAM: "Specialized team managing data warehouse and business intelligence tools like PowerBI",
         }
         return descriptions[self]
 
 
-"""
-This section defines the pydantic structured data model for the classification process.
-"""
-
-
 class TicketClassification(BaseModel):
-    """Classification details for a ticket. Includes type, priority, sentiment, tags, responsible team and additional information."""
+    """Classification details for a ticket. To be filled by the LLM-Agent"""
 
     ticket_type: TicketType = Field(..., description="Type of the ticket")
     ticket_priority: TicketPriority = Field(
@@ -154,36 +140,30 @@ class TicketClassification(BaseModel):
         ..., description="Sentiment of the ticket submitter"
     )
     ticket_tags: Optional[List[TicketTags]] = Field(
-        default=None, max_items=3, description="Tags associated with the ticket"
+        default=None, description="Tags associated with the ticket"
     )
     responsible_team: Optional[ResponsibleTeam] = Field(
-        default=ResponsibleTeam.IT_SUPPORT
+        default=ResponsibleTeam.IT_SUPPORT,
+        description="Team responsible for handling the ticket",
     )
     confidence_score: float = Field(
         ...,
         ge=0.0,
         le=1.0,
-        description="Confidence score for the classification action (between 0.0 and 1.0)",
-    )
-    key_information: Optional[str] = Field(
-        default=None,
-        max_length=500,
-        description="Key information extracted from the ticket",
+        description="Confidence score for the entire classification (between 0.0 and 1.0)",
     )
     suggested_action: Optional[str] = Field(
         default=None,
-        max_length=2000,
         description="Suggested action to be taken for the ticket",
     )
     reasoning: Optional[str] = Field(
         default=None,
-        max_length=2000,
-        description="Reasoning behind the classification and suggested action",
+        description="Reasoning behind the classification",
     )
 
     @property
     def is_confident(self) -> bool:
-        """Returns True if confidence score is above 0.8"""
+        """Returns True if confidence score is above 0.85"""
         return self.confidence_score > 0.85
 
 
@@ -194,7 +174,7 @@ class Ticket(BaseModel):
     subject: str = Field(
         ..., min_length=1, max_length=100, description="Subject of the ticket"
     )
-    body: Optional[str] = Field(None, max_length=1000, description="Body of the ticket")
+    body: Optional[str] = Field(None, max_length=2000, description="Body of the ticket")
     status: TicketStatus = Field(
         default=TicketStatus.NEW, description="Status of the ticket"
     )
@@ -205,14 +185,6 @@ class Ticket(BaseModel):
         None,
         description="Classification details for the ticket, provided by the LLM-Agent",
     )
-    classified_at: Optional[str] = Field(
-        default=None,
-        description="ISO 8601 timestamp when the classification was performed",
-    )
-
-    @property
-    def is_assigned(self) -> bool:
-        return self.assigned_to is not None
 
     @property
     def is_classified(self) -> bool:
@@ -220,7 +192,6 @@ class Ticket(BaseModel):
 
     def set_classification(self, classification: TicketClassification) -> None:
         self.classification = classification
-        self.classified_at = datetime.now().isoformat()
         if self.is_classified and self.classification.is_confident:
             self.status = TicketStatus.OPEN
             self.assigned_to = self.classification.responsible_team.value
