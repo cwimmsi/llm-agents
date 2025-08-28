@@ -1,5 +1,5 @@
 from crewai import LLM
-from playground.models import get_default_model
+from playground.data.models import get_default_model
 from utils.model import Model, ModelProvider
 from utils.logger import setup_logger
 

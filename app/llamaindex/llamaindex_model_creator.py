@@ -4,7 +4,7 @@ from llama_index.llms.openai import OpenAI
 from llama_index.llms.mistralai import MistralAI
 from llama_index.llms.ollama import Ollama
 from llama_index.llms.google_genai import GoogleGenAI
-from playground.models import get_default_model
+from playground.data.models import get_default_model
 from utils.model import Model, ModelProvider
 from utils.logger import setup_logger
 

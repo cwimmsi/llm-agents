@@ -8,7 +8,7 @@ from pydantic_ai.providers.mistral import MistralProvider
 from pydantic_ai.providers.google import GoogleProvider
 from pydantic_ai.providers.openai import OpenAIProvider
 from pydantic_ai.providers.ollama import OllamaProvider
-from playground.models import get_default_model
+from playground.data.models import get_default_model
 from utils.model import Model, ModelProvider
 from utils.logger import setup_logger
 

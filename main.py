@@ -6,8 +6,8 @@ from playground.run_llamaindex import run_llamaindex
 from playground.run_n8n import run_n8n, run_n8n_test
 from playground.run_openai import run_openai
 from playground.run_pydanticai import run_pydanticai
-from playground.models import get_model_by_name
-from playground.tickets import TICKET_DATASET
+from playground.data.models import get_model_by_name
+from playground.data.tickets import TICKET_DATASET
 from utils.logger import setup_logger
 from utils.model import ModelName
 

@@ -1,6 +1,8 @@
 import requests
-from playground.tickets import get_ticket_by_id
-from playground.models import get_default_model
+from playground.data.tickets import get_ticket_by_id
+from playground.data.models import get_default_model
+from playground.data.expected_classifications import get_expected_classification
+from playground.data.evaluate_classification import evaluate_classification
 from utils.model import Model
 from utils.ticket import Ticket, TicketClassification
 from utils.logger import setup_logger
@@ -41,9 +43,13 @@ def trigger_n8n_endpoint(ticket_id: int, n8n_webhook_url: str):
 
     ticket_event = process_ticket_event(ticket_event, n8n_webhook_url)
     if ticket_event.is_classified:
-        logger.info(f"N8N: {ticket_event.model_dump_json(indent=2)}")
+        logger.debug(f"N8N: {ticket_event.model_dump_json(indent=2)}")
     else:
         logger.warning(f"N8N: Ticket event not classified.")
+
+    evaluate_classification(
+        ticket_event.classification, get_expected_classification(ticket_id)
+    )
 
     logger.info(f"N8N: Ticket processing completed.")
 
