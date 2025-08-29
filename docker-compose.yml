@@ -1,32 +1,11 @@
 volumes:
   ollama_storage:
-  qdrant_storage:
 
 networks:
   thesis-net:
     driver: bridge
 
 services:
-  qdrant:
-    image: qdrant/qdrant
-    hostname: qdrant
-    container_name: qdrant
-    networks: 
-      - thesis-net
-    restart: unless-stopped
-    ports:
-      - 6333:6333
-    volumes:
-      - qdrant_storage:/qdrant/storage
-    environment:
-      - QDRANT_LOG_LEVEL=INFO
-      - QDRANT_ALLOW_RECOVERY=true
-    deploy:
-      resources:
-        limits:
-          memory: 1.5G
-          cpus: "1.0"
-
   ollama:
     image: ollama/ollama:latest
     hostname: ollama
@@ -64,8 +43,6 @@ services:
       - NODE_ENV=production
       - WEBHOOK_URL=http://localhost:5678/
       - GENERIC_TIMEZONE=Europe/Berlin
-      - QDRANT_HOST=qdrant
-      - QDRANT_PORT=6333
       - OLLAMA_HOST=ollama
       - OLLAMA_PORT=11434
     logging:
@@ -78,7 +55,5 @@ services:
           memory: 1G
           cpus: "1.0"
     depends_on:
-      qdrant:
-        condition: service_started
       ollama:
         condition: service_started
