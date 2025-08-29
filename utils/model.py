@@ -3,17 +3,13 @@ from enum import Enum
 
 
 class ModelName(str, Enum):
-    PHI4_MINI = "phi4-mini:3.8b"  # ollama, open-source
-    DEEPSEEK_R1 = "deepseek-r1:1.5b"  # ollama, open-source
-    LLAMA3_2 = "llama3.2:3b"  # ollama, open-source
+    DEEPSEEK_R1 = "deepseek-r1:1.5b"  # via ollama, open-source, 1,5B parameters
+    LLAMA3_2 = "llama3.2:3b"  # via ollama, open-source, 3B parameters
     GPT_3_5_TURBO = "gpt-3.5-turbo"
     GPT_4O_MINI = "gpt-4o-mini"
     GPT_4O = "gpt-4o"
-    GPT_5_MINI = "gpt-5-mini"
-    MISTRAL_SMALL_2506 = "mistral-small-2506"  # available open-source too
+    MISTRAL_SMALL_2506 = "mistral-small-2506"
     MISTRAL_MEDIUM_2508 = "mistral-medium-2508"
-    MAGISTRAL_SMALL_2507 = "magistral-small-2507"  # available open-source too
-    MAGISTRAL_MEDIUM_2507 = "magistral-medium-2507"
 
 
 class ModelProvider(str, Enum):

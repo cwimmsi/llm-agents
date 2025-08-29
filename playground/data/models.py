@@ -3,7 +3,6 @@ from utils.model import Model, ModelProvider, ModelName
 
 
 MODELS: Dict[ModelName, Model] = {
-    ModelName.PHI4_MINI: Model(provider=ModelProvider.OLLAMA, name=ModelName.PHI4_MINI),
     ModelName.DEEPSEEK_R1: Model(
         provider=ModelProvider.OLLAMA, name=ModelName.DEEPSEEK_R1
     ),
@@ -14,19 +13,10 @@ MODELS: Dict[ModelName, Model] = {
     ModelName.MISTRAL_MEDIUM_2508: Model(
         provider=ModelProvider.MISTRAL, name=ModelName.MISTRAL_MEDIUM_2508
     ),
-    ModelName.MAGISTRAL_SMALL_2507: Model(
-        provider=ModelProvider.MISTRAL, name=ModelName.MAGISTRAL_SMALL_2507
-    ),
-    ModelName.MAGISTRAL_MEDIUM_2507: Model(
-        provider=ModelProvider.MISTRAL, name=ModelName.MAGISTRAL_MEDIUM_2507
-    ),
     ModelName.GPT_4O_MINI: Model(
         provider=ModelProvider.OPENAI, name=ModelName.GPT_4O_MINI
     ),
     ModelName.GPT_4O: Model(provider=ModelProvider.OPENAI, name=ModelName.GPT_4O),
-    ModelName.GPT_5_MINI: Model(
-        provider=ModelProvider.OPENAI, name=ModelName.GPT_5_MINI
-    ),
     ModelName.GPT_3_5_TURBO: Model(
         provider=ModelProvider.OPENAI, name=ModelName.GPT_3_5_TURBO
     ),

@@ -1,5 +1,6 @@
 import logging
 import os
+import re
 from datetime import datetime
 from colorama import Fore, Style
 
@@ -35,7 +36,11 @@ def setup_logger() -> logging.Logger:
 
         # Create file handler and set level to debug
         timestamp = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
-        log_file = f"logs/{GLOBAL_LOGGER_NAME}/{GLOBAL_LOG_FILE_NAME}_{timestamp}.log"
+        # Replace invalid characters (e.g., :, /, \, *, ?, ", <, >, |) with an underscore
+        safe_logger_name = re.sub(r'[<>:"/\\|?*]', "_", GLOBAL_LOGGER_NAME)
+        safe_log_file_name = re.sub(r'[<>:"/\\|?*]', "_", GLOBAL_LOG_FILE_NAME)
+        # Build final log file path
+        log_file = f"logs/{safe_logger_name}/{safe_log_file_name}_{timestamp}.log"
         os.makedirs(os.path.dirname(log_file), exist_ok=True)
         file_handler = logging.FileHandler(log_file)
         file_handler.setLevel(logging.DEBUG)
