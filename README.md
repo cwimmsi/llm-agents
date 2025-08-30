@@ -64,13 +64,9 @@ uv remove {package-name} --link-mode=copy
 Set up the following environment variables in your `.env` file
 
 ```python
-# n8n owner account
-N8N_EMAIL=youremail
-N8N_PASSWORD=yourpassword
-
 # n8n workflow trigger url
-N8N_WEBHOOK_URL_TEST=pointing_to_test_trigger_url
-N8N_WEBHOOK_URL_PROD=pointing_to_prod_trigger_url
+N8N_WEBHOOK_URL_TEST=url_to_test_webhook
+N8N_WEBHOOK_URL_PROD=url_to_prod_webhook
 
 # model api keys
 OPENAI_API_KEY=your_openai_api_key
