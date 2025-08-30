@@ -7,11 +7,11 @@ MODELS: Dict[ModelName, Model] = {
         provider=ModelProvider.OLLAMA, name=ModelName.DEEPSEEK_R1
     ),
     ModelName.LLAMA3_2: Model(provider=ModelProvider.OLLAMA, name=ModelName.LLAMA3_2),
-    ModelName.MISTRAL_SMALL_2506: Model(
-        provider=ModelProvider.MISTRAL, name=ModelName.MISTRAL_SMALL_2506
+    ModelName.MISTRAL_SMALL_LATEST: Model(
+        provider=ModelProvider.MISTRAL, name=ModelName.MISTRAL_SMALL_LATEST
     ),
-    ModelName.MISTRAL_MEDIUM_2508: Model(
-        provider=ModelProvider.MISTRAL, name=ModelName.MISTRAL_MEDIUM_2508
+    ModelName.MISTRAL_MEDIUM_LATEST: Model(
+        provider=ModelProvider.MISTRAL, name=ModelName.MISTRAL_MEDIUM_LATEST
     ),
     ModelName.GPT_4O_MINI: Model(
         provider=ModelProvider.OPENAI, name=ModelName.GPT_4O_MINI

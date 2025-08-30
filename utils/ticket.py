@@ -14,14 +14,10 @@ class TicketType(str, Enum):
     @property
     def description(self) -> str:
         descriptions = {
-            self.SERVICE_REQUEST: "Routine, planned user requests that do not indicate a malfunction \
-                but require IT assistance. Examples are requests for new hardware, software, access to applications.",
-            self.CHANGE_REQUEST: "Formal proposal for modifications to any aspect of the IT environment, \
-                such as software updates, hardware replacements, configuration changes or application changes.",
-            self.PROBLEM: "Used when investigating the underlying cause of one or more incidents. \
-                It aims to analyze root causes and prevent recurrence.",
-            self.INCIDENT: "Unplanned interruption or reduction in quality of an IT service. \
-                Restore normal service as quickly as possible.",
+            self.SERVICE_REQUEST: "Routine, planned user requests that do not indicate a malfunction but require IT assistance. Examples are requests for new hardware, software, access to applications.",
+            self.CHANGE_REQUEST: "Formal proposal for modifications to any aspect of the IT environment, such as software updates, hardware replacements, configuration changes or application changes.",
+            self.PROBLEM: "Used when investigating the underlying cause of one or more incidents. It aims to analyze root causes and prevent recurrence.",
+            self.INCIDENT: "Unplanned interruption or reduction in quality of an IT service. Restore normal service as quickly as possible.",
         }
         return descriptions[self]
 
@@ -37,14 +33,10 @@ class TicketPriority(str, Enum):
     @property
     def description(self) -> str:
         descriptions = {
-            self.CRITICAL: "Urgent issues needing immediate attention, causing major \
-                business disruption for the entire company or a larger amount of people.",
-            self.HIGH: "Important issues to be addressed soon, potential for \
-                significant impact for one or a few employees",
-            self.MEDIUM: "Standard issues that can be scheduled for regular handling, \
-                it's the default priority level",
-            self.LOW: "Minor issues or requests that can be handled when convenient. \
-                The employee is not blocked by this issue.",
+            self.CRITICAL: "Urgent issues needing immediate attention, causing major business disruption for the entire company or a larger amount of people.",
+            self.HIGH: "Important issues to be addressed soon, potential for significant impact for one or a few employees.",
+            self.MEDIUM: "Standard issues that can be scheduled for regular handling, it's the default priority level.",
+            self.LOW: "Minor issues or requests that can be handled when convenient. The employee is not blocked by this issue.",
         }
         return descriptions[self]
 
@@ -104,7 +96,7 @@ class TicketTags(str, Enum):
     @property
     def description(self) -> str:
         descriptions = {
-            self.HARDWARE: "Issues with physical components (computers, phones, laptops, servers), except printers",
+            self.HARDWARE: "Issues with physical components other than printers (e.g. computers, laptops, phones, tablets, servers)",
             self.SOFTWARE: "Issues with any applications, operating systems, and software",
             self.NETWORK: "Network-related issues including LAN, WAN, WiFi, and VPN",
             self.PRINTING: "Issues with printers, print servers, and scanning",

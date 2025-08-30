@@ -7,8 +7,7 @@
    ├── crewai/            # Contains *_agent.py and *_model_creator.py
    ├── langchain/         # Contains *_agent.py and *_model_creator.py
    ├── llamaindex/        # Contains *_agent.py and *_model_creator.py
-   ├── n8n/               # Contains n8n data (workflows, credentials, ...)
-      └── data/           # Data persistence connected to Docker container
+   ├── n8n/               # Contains n8n data (workflow, data)
    ├── openai/            # Contains *_agent.py and *_model_creator.py
    └── pydanticai/        # Contains *_agent.py and *_model_creator.py
 ├── logs/                 # Output logs of the experiments
@@ -122,14 +121,10 @@ Current supported models in the code (lookup `model.py`):
 - gpt-4o-mini
 - gpt-4o
 - gpt-3.5-turbo
-- gpt-5-mini
-- mistral-small-2506
-- mistral-medium-2508
-- magistral-small-2507
-- magistral-medium-2507
-- qwen3:1.8b  (via Ollama)
-- qwen3:4b    (via Ollama)
+- mistral-small-latest
+- mistral-medium-latest
 - llama3.2:3b (via Ollama)
+- deepseek-r1:1.5b (via Ollama)
 
 ### Output logs of the experiment
 Logs will be written to the folder:

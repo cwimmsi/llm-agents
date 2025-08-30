@@ -17,7 +17,8 @@ N8N_WEBHOOK_URL_PROD = os.environ.get("N8N_WEBHOOK_URL_PROD")
 
 async def process_ticket_event(ticket_event: Ticket, n8n_webhook_url: str) -> Ticket:
     logger = setup_logger()
-    async with httpx.AsyncClient() as client:
+    timeout = httpx.Timeout(720.0, connect=30.0)  # Set timeouts
+    async with httpx.AsyncClient(timeout=timeout) as client:
         try:
             response = await client.post(
                 n8n_webhook_url, json=ticket_event.model_dump()
@@ -26,13 +27,17 @@ async def process_ticket_event(ticket_event: Ticket, n8n_webhook_url: str) -> Ti
             logger.debug(f"Response status code: {response.status_code}")
 
             # Parse into TicketClassification object
-            ticket_classification = TicketClassification(
-                **response.json().get("classification")
-            )
-            if ticket_classification:
+            response_json = response.json()
+            ticket_classification_data = response_json.get("classification")
+            logger.debug(f"Received classification data: {ticket_classification_data}")
+            try:
+                ticket_classification = TicketClassification(
+                    **ticket_classification_data
+                )
                 ticket_event.set_classification(ticket_classification)
-
-        except httpx.RequestError as e:
+            except Exception as e:
+                logger.error(f"Error creating TicketClassification: {str(e)}")
+        except Exception as e:
             logger.error(f"Error sending event to n8n: {str(e)}")
 
     return ticket_event

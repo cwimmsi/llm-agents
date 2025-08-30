@@ -1,0 +1,395 @@
+{
+  "name": "Ticket Resolution",
+  "nodes": [
+    {
+      "parameters": {
+        "httpMethod": "POST",
+        "path": "14be3ed3-a7e9-4948-a5c2-9f4b464e3c1b",
+        "responseMode": "responseNode",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.webhook",
+      "typeVersion": 2.1,
+      "position": [
+        -16,
+        256
+      ],
+      "id": "559ceaae-9409-4521-bfec-ac6dfbbcd73b",
+      "name": "Webhook",
+      "webhookId": "14be3ed3-a7e9-4948-a5c2-9f4b464e3c1b"
+    },
+    {
+      "parameters": {
+        "respondWith": "json",
+        "responseBody": "={{ $json.output }}",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.respondToWebhook",
+      "typeVersion": 1.4,
+      "position": [
+        1232,
+        256
+      ],
+      "id": "9beca295-6d5b-47a7-9211-18d1fe4608ed",
+      "name": "Respond to Webhook"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "c99d1529-bf4e-490b-9b7d-b2deb36c979a",
+              "name": "ticket_id",
+              "value": "={{ $json.body.id }}",
+              "type": "string"
+            },
+            {
+              "id": "2bf6fd63-c6fd-4397-acba-e9109a21b896",
+              "name": "ticket_subject",
+              "value": "={{ $json.body.subject }}",
+              "type": "string"
+            },
+            {
+              "id": "e141f239-f4e3-499c-a8a3-4ce79cc4e712",
+              "name": "ticket_body",
+              "value": "={{ $json.body.body }}",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        208,
+        256
+      ],
+      "id": "a20b16ab-15ea-4ac4-8064-863a266930f9",
+      "name": "Extract Ticket Fields"
+    },
+    {
+      "parameters": {
+        "promptType": "define",
+        "text": "=## Input\nAnalyse the following ticket and perform the classification tasks:\nTicket subject: {{ $('Extract Ticket Fields').item.json.ticket_subject }}\nTicket body: {{ $('Extract Ticket Fields').item.json.ticket_body }}",
+        "hasOutputParser": true,
+        "messages": {
+          "messageValues": [
+            {
+              "message": "={{ $json.system_prompt }}"
+            }
+          ]
+        },
+        "batching": {}
+      },
+      "type": "@n8n/n8n-nodes-langchain.chainLlm",
+      "typeVersion": 1.7,
+      "position": [
+        656,
+        256
+      ],
+      "id": "1ef28701-6d98-4032-b93b-9ba1c49f0624",
+      "name": "Basic LLM Chain"
+    },
+    {
+      "parameters": {
+        "model": "llama3.2:3b",
+        "options": {
+          "temperature": 0,
+          "format": "json"
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOllama",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        784
+      ],
+      "id": "080f36cd-17c1-45e7-9ea9-119c8ac4e241",
+      "name": "Ollama Chat Model",
+      "credentials": {
+        "ollamaApi": {
+          "id": "RP8DBeHyPDmzG74b",
+          "name": "Ollama local account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "jsonSchemaExample": "{\n  \"classification\": {\n    \"ticket_type\": \"incident\",\n    \"ticket_priority\": \"critical\",\n    \"ticket_sentiment\": \"negative\",\n    \"ticket_tags\": [\n      \"network\"\n    ],\n    \"responsible_team\": \"hardware_network_team\",\n    \"confidence_score\": 0.9,\n    \"suggested_action\": \"Das IT-Support-Team sollte sofort mit der Untersuchung des WLAN-Problems beginnen. Da mehrere Benutzer im Team und auch im anderen Geb�ude betroffen sind, ist es wichtig, die Ursache des Problems schnell zu identifizieren. Zun�chst sollte �berpr�ft werden, ob es eine allgemeine St�rung im Netzwerk gibt oder ob spezifische Hardwareprobleme vorliegen. Die Kommunikation mit den betroffenen Benutzern sollte aufrechterhalten werden, um sie �ber den Fortschritt der Probleml�sung zu informieren. Es k�nnte auch hilfreich sein, die Netzwerkger�te neu zu starten oder die Konfiguration zu �berpr�fen, um sicherzustellen, dass alles ordnungsgem�� funktioniert.\",\n    \"reasoning\": \"Die Ticketbeschreibung deutet auf ein Netzwerkproblem hin, da sowohl Laptops als auch Handys der Benutzer betroffen sind und das Problem auch andere Kollegen im anderen Geb�ude betrifft. Dies zeigt, dass es sich um ein weitreichendes Problem handelt, das die gesamte Abteilung betrifft, was die Einstufung als \\\"kritisch\\\" rechtfertigt. Die negative Stimmung des Benutzers ist klar, da er um eine schnelle L�sung bittet, um Rechnungen versenden zu k�nnen. Daher wurde das Ticket als \\\"Vorfall\\\" klassifiziert, da es sich um eine unvorhergesehene Unterbrechung des Dienstes handelt.\"\n  }\n}"
+      },
+      "type": "@n8n/n8n-nodes-langchain.outputParserStructured",
+      "typeVersion": 1.3,
+      "position": [
+        800,
+        480
+      ],
+      "id": "7a9ab90f-29a5-44db-9565-223b6d96ec02",
+      "name": "Structured Output Parser"
+    },
+    {
+      "parameters": {
+        "mode": "raw",
+        "jsonOutput": "={\n  \"output\": {\n    \"ticket_id\": \"{{ $('Extract Ticket Fields').item.json.ticket_id }}\",\n    \"classification\": {{ $json.output.classification }}\n  }\n}\n",
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        1008,
+        256
+      ],
+      "id": "23022a55-a2aa-4df1-9438-92a4b212768c",
+      "name": "Prepare Output"
+    },
+    {
+      "parameters": {
+        "model": {
+          "__rl": true,
+          "value": "gpt-4o-mini",
+          "mode": "list",
+          "cachedResultName": "gpt-4o-mini"
+        },
+        "options": {
+          "responseFormat": "json_object",
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatOpenAi",
+      "typeVersion": 1.2,
+      "position": [
+        624,
+        464
+      ],
+      "id": "170a71d8-0106-42ba-8c55-dc117722b618",
+      "name": "OpenAI Chat Model",
+      "credentials": {
+        "openAiApi": {
+          "id": "RSaADhTJEENRdECX",
+          "name": "OpenAi account"
+        }
+      }
+    },
+    {
+      "parameters": {
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatGoogleGemini",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        1008
+      ],
+      "id": "7b5bb402-92cf-4c7d-9648-2eff704a5f0b",
+      "name": "Google Gemini Chat Model",
+      "credentials": {
+        "googlePalmApi": {
+          "id": "MhpCvGSSKMULqOWm",
+          "name": "Google Gemini(PaLM) Api account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "model": "mistral-small-latest",
+        "options": {
+          "temperature": 0
+        }
+      },
+      "type": "@n8n/n8n-nodes-langchain.lmChatMistralCloud",
+      "typeVersion": 1,
+      "position": [
+        -16,
+        560
+      ],
+      "id": "7dc166bc-8162-4b6b-9a48-ec13df6b2b9e",
+      "name": "Mistral Cloud Chat Model",
+      "credentials": {
+        "mistralCloudApi": {
+          "id": "on6Piy2g19vrj5aT",
+          "name": "Mistral Cloud account"
+        }
+      },
+      "disabled": true
+    },
+    {
+      "parameters": {
+        "content": "## Role\nYou are an IT help desk support assistant of an IT department team.\nYour task is to analyse incoming IT support tickets and provide structured output information about the ticket.\n\n## Context\n- The company has a diverse range of IT systems and applications.\n- We prioritize based on urgency and ticket submitter sentiment, \n- Whereas the priority critical is only used, if the entire company is affected by an issue.\n- The help desk team consists of various specialists with different areas of expertise.\n\n## Classification Tasks\n1. Set a ticket type by choosing one of the following options:\n   - service_request (Routine, planned user requests that do not indicate a malfunction but require IT assistance. Examples are requests for new hardware, software, access to applications.)\n   - change_request (Formal proposal for modifications to any aspect of the IT environment, such as software updates, hardware replacements, configuration changes or application changes.)\n   - problem (Used when investigating the underlying cause of one or more incidents. It aims to analyze root causes and prevent recurrence.)\n   - incident (Unplanned interruption or reduction in quality of an IT service. Restore normal service as quickly as possible.))\n2. Set a ticket priority by choosing one of the following options:\n   - critical (Urgent issues needing immediate attention, causing major business disruption for the entire company or a larger amount of people.)\n   - high (Important issues to be addressed soon, potential for significant impact for one or a few employees.)\n   - medium (Standard issues that can be scheduled for regular handling, it's the default priority level.)\n   - low (Minor issues or requests that can be handled when convenient. The employee is not blocked by this issue.))\n3. Determine the ticket publishers sentiment by choosing one of the following options:\n   - positive (User expresses satisfaction or happiness with the service)\n   - neutral (User shows neither satisfaction nor dissatisfaction)\n   - negative (User expresses dissatisfaction, frustration, or anger))\n4. Assign between one tag or up to three tags by choosing from the following options:\n   - hardware (Issues with physical components other than printers (e.g. computers, laptops, phones, tablets, servers))\n   - software (Issues with any applications, operating systems, and software)\n   - network (Network-related issues including LAN, WAN, WiFi, and VPN)\n   - printing (Issues with printers, print servers, and scanning)\n   - onboarding (Issues related to employee onboarding processes (e.g. new employee))\n   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))\n5. Assign a responsible team to the ticket by choosing one of the following options:\n   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)\n   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)\n   - software_team (Specialized team responsible for software applications and related issues)\n   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)\n   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))\n6. Provide a confidence score for your classification (between 0.0 and 1.0).\n7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.\n8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.\n\nRemember:\n- If you're unsure about any aspect, reflect that in your confidence score.\n- Always provide reasoning for your classification.\n- Escape the character '\\' with '\\\\'.\n- Use proper json formatting for your output.",
+        "height": 1216,
+        "width": 1552,
+        "color": 6
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -1760,
+        -336
+      ],
+      "id": "0ef42668-9ab6-47a8-8295-de101fe72138",
+      "name": "Sticky Note"
+    },
+    {
+      "parameters": {
+        "assignments": {
+          "assignments": [
+            {
+              "id": "5343ee8c-5e60-4601-a2c3-d103e75ff4b1",
+              "name": "system_prompt",
+              "value": "=## Role\nYou are an IT help desk support assistant of an IT department team.\nYour task is to analyse incoming IT support tickets and provide structured output information about the ticket.\n\n## Context\n- The company has a diverse range of IT systems and applications.\n- We prioritize based on urgency and ticket submitter sentiment, \n- Whereas the priority critical is only used, if the entire company is affected by an issue.\n- The help desk team consists of various specialists with different areas of expertise.\n\n## Classification Tasks\n1. Set a ticket type by choosing one of the following options:\n   - service_request (Routine, planned user requests that do not indicate a malfunction but require IT assistance. Examples are requests for new hardware, software, access to applications.)\n   - change_request (Formal proposal for modifications to any aspect of the IT environment, such as software updates, hardware replacements, configuration changes or application changes.)\n   - problem (Used when investigating the underlying cause of one or more incidents. It aims to analyze root causes and prevent recurrence.)\n   - incident (Unplanned interruption or reduction in quality of an IT service. Restore normal service as quickly as possible.))\n2. Set a ticket priority by choosing one of the following options:\n   - critical (Urgent issues needing immediate attention, causing major business disruption for the entire company or a larger amount of people.)\n   - high (Important issues to be addressed soon, potential for significant impact for one or a few employees.)\n   - medium (Standard issues that can be scheduled for regular handling, it's the default priority level.)\n   - low (Minor issues or requests that can be handled when convenient. The employee is not blocked by this issue.))\n3. Determine the ticket publishers sentiment by choosing one of the following options:\n   - positive (User expresses satisfaction or happiness with the service)\n   - neutral (User shows neither satisfaction nor dissatisfaction)\n   - negative (User expresses dissatisfaction, frustration, or anger))\n4. Assign between one tag or up to three tags by choosing from the following options:\n   - hardware (Issues with physical components other than printers (e.g. computers, laptops, phones, tablets, servers))\n   - software (Issues with any applications, operating systems, and software)\n   - network (Network-related issues including LAN, WAN, WiFi, and VPN)\n   - printing (Issues with printers, print servers, and scanning)\n   - onboarding (Issues related to employee onboarding processes (e.g. new employee))\n   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))\n5. Assign a responsible team to the ticket by choosing one of the following options:\n   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)\n   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)\n   - software_team (Specialized team responsible for software applications and related issues)\n   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)\n   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))\n6. Provide a confidence score for your classification (between 0.0 and 1.0).\n7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.\n8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.\n\nRemember:\n- If you're unsure about any aspect, reflect that in your confidence score.\n- Always provide reasoning for your classification.\n- Escape the character '\\' with '\\\\'.\n- Use proper json formatting for your output.",
+              "type": "string"
+            }
+          ]
+        },
+        "options": {}
+      },
+      "type": "n8n-nodes-base.set",
+      "typeVersion": 3.4,
+      "position": [
+        432,
+        256
+      ],
+      "id": "1c644899-8696-4a7a-ab5b-b10d9b1b4b5b",
+      "name": "Define System Prompt"
+    },
+    {
+      "parameters": {
+        "content": "### Structured Output format\n{\n  \"classification\": {\n    \"ticket_type\": \"incident\",\n    \"ticket_priority\": 1,\n    \"ticket_sentiment\": \"negative\",\n    \"ticket_tags\": [\n      \"email\",\n      \"software\"\n    ],\n    \"responsible_team\": \"it_support\",\n    \"confidence_score\": 0.9,\n    \"key_information\": \"E-Mail Signatur, lädt nicht, täglich, Probleme, Zeitverlust\",\n    \"suggested_action\": \"Bitte überprüfen Sie die E-Mail-Signatur-Einstellungen des Benutzers und testen Sie die Signatur in verschiedenen E-Mail-Clients. Es könnte ein Problem mit der Formatierung oder den Einstellungen geben, das behoben werden muss. Wenn das Problem weiterhin besteht, könnte eine detaillierte Analyse der E-Mail-Software erforderlich sein.\",\n    \"reasoning\": \"Das Ticket beschreibt ein wiederkehrendes Problem mit der E-Mail-Signatur, das den Benutzer frustriert und viel Zeit kostet. Aufgrund der Dringlichkeit und der negativen Stimmung des Benutzers wurde es als Vorfall mit hoher Priorität eingestuft.\"\n  }\n}",
+        "height": 544,
+        "width": 608,
+        "color": 4
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        1056,
+        -416
+      ],
+      "id": "5b34287d-39f1-46a5-b6e6-51370878c6c1",
+      "name": "Sticky Note1"
+    },
+    {
+      "parameters": {
+        "content": "### Deactivated models",
+        "height": 672
+      },
+      "type": "n8n-nodes-base.stickyNote",
+      "typeVersion": 1,
+      "position": [
+        -96,
+        480
+      ],
+      "id": "db3f3ae2-ed15-415c-9bcb-3ac886ab95c2",
+      "name": "Sticky Note2"
+    }
+  ],
+  "pinData": {},
+  "connections": {
+    "Webhook": {
+      "main": [
+        [
+          {
+            "node": "Extract Ticket Fields",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Extract Ticket Fields": {
+      "main": [
+        [
+          {
+            "node": "Define System Prompt",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Ollama Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Basic LLM Chain": {
+      "main": [
+        [
+          {
+            "node": "Prepare Output",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Structured Output Parser": {
+      "ai_outputParser": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_outputParser",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Prepare Output": {
+      "main": [
+        [
+          {
+            "node": "Respond to Webhook",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "OpenAI Chat Model": {
+      "ai_languageModel": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "ai_languageModel",
+            "index": 0
+          }
+        ]
+      ]
+    },
+    "Google Gemini Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Mistral Cloud Chat Model": {
+      "ai_languageModel": [
+        []
+      ]
+    },
+    "Define System Prompt": {
+      "main": [
+        [
+          {
+            "node": "Basic LLM Chain",
+            "type": "main",
+            "index": 0
+          }
+        ]
+      ]
+    }
+  },
+  "active": true,
+  "settings": {
+    "executionOrder": "v1"
+  },
+  "versionId": "650783dd-b0b4-48ca-9743-cbc985b9f57b",
+  "meta": {
+    "templateCredsSetupCompleted": true,
+    "instanceId": "b0b318bf312aee89c7cdeff60c939f261ec05b52bf4f8e219611c1103e14316c"
+  },
+  "id": "2hgjRmnagVp5XZ3d",
+  "tags": []
+}

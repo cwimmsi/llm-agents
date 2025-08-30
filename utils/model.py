@@ -8,8 +8,8 @@ class ModelName(str, Enum):
     GPT_3_5_TURBO = "gpt-3.5-turbo"
     GPT_4O_MINI = "gpt-4o-mini"
     GPT_4O = "gpt-4o"
-    MISTRAL_SMALL_2506 = "mistral-small-2506"
-    MISTRAL_MEDIUM_2508 = "mistral-medium-2508"
+    MISTRAL_SMALL_LATEST = "mistral-small-latest"
+    MISTRAL_MEDIUM_LATEST = "mistral-medium-latest"
 
 
 class ModelProvider(str, Enum):

@@ -1,0 +1,173 @@
+2025-08-30 22:29:04,449 - INFO - n8n_mistral-small-latest - Starting experiment with agent run function 'run_n8n' and model 'ModelName.MISTRAL_SMALL_LATEST'
+2025-08-30 22:29:04,450 - INFO - n8n_mistral-small-latest - TKT-001: Start processing ticket event...
+2025-08-30 22:29:07,553 - DEBUG - n8n_mistral-small-latest - Response status code: 200
+2025-08-30 22:29:07,553 - DEBUG - n8n_mistral-small-latest - Received classification data: {'ticket_type': 'incident', 'ticket_priority': 'critical', 'ticket_sentiment': 'negative', 'ticket_tags': ['network'], 'responsible_team': 'hardware_network_team', 'confidence_score': 0.95, 'suggested_action': 'Der IT-Support sollte sofort den Netzwerkausfall untersuchen. Zuerst sollten die Netzwerkgeräte und Verbindungen überprüft werden. Falls nötig, sollte der Internetdienstanbieter kontaktiert werden, um den Ausfall zu bestätigen und eine voraussichtliche Behebungszeit zu erhalten. Parallel dazu sollten die betroffenen Mitarbeiter über den aktuellen Stand informiert werden, um Transparenz zu gewährleisten. Sobald der Ausfall behoben ist, sollte eine Nachverfolgung erfolgen, um sicherzustellen, dass alle betroffenen Geräte wieder uneingeschränkt funktionieren.', 'reasoning': "Der Ticket-Typ wurde als 'incident' klassifiziert, da es sich um eine unvorhergesehene Unterbrechung des Internetzugangs handelt, die mehrere Mitarbeiter betrifft. Die Priorität ist 'critical', da der Ausfall den gesamten Betrieb beeinträchtigt und dringend behoben werden muss. Das Sentiment ist 'negative', da der Nutzer Unzufriedenheit und Dringlichkeit ausdrückt. Der Tag 'network' wurde zugewiesen, da das Problem den Internetzugang betrifft. Das verantwortliche Team ist die 'hardware_network_team', da sie für Netzwerkprobleme zuständig ist. Die Konfidenz ist hoch, da die Informationen klar und eindeutig sind."}
+2025-08-30 22:29:07,556 - DEBUG - n8n_mistral-small-latest - Ticket: {
+  "id": "TKT-001",
+  "subject": "WLAN ausgefallen",
+  "body": "Ich und mein Team haben kein Internet. Weder auf dem Laptop noch auf dem Handy. \n        Bei unseren Kollegen im anderen Gebäude funktioniert es auch nicht. Bitte um schnelle Behebung des Problems!\n        Wir müssen dringend Rechnungen versenden.",
+  "status": "open",
+  "assigned_to": "hardware_network_team",
+  "classification": {
+    "ticket_type": "incident",
+    "ticket_priority": "critical",
+    "ticket_sentiment": "negative",
+    "ticket_tags": [
+      "network"
+    ],
+    "responsible_team": "hardware_network_team",
+    "confidence_score": 0.95,
+    "suggested_action": "Der IT-Support sollte sofort den Netzwerkausfall untersuchen. Zuerst sollten die Netzwerkgeräte und Verbindungen überprüft werden. Falls nötig, sollte der Internetdienstanbieter kontaktiert werden, um den Ausfall zu bestätigen und eine voraussichtliche Behebungszeit zu erhalten. Parallel dazu sollten die betroffenen Mitarbeiter über den aktuellen Stand informiert werden, um Transparenz zu gewährleisten. Sobald der Ausfall behoben ist, sollte eine Nachverfolgung erfolgen, um sicherzustellen, dass alle betroffenen Geräte wieder uneingeschränkt funktionieren.",
+    "reasoning": "Der Ticket-Typ wurde als 'incident' klassifiziert, da es sich um eine unvorhergesehene Unterbrechung des Internetzugangs handelt, die mehrere Mitarbeiter betrifft. Die Priorität ist 'critical', da der Ausfall den gesamten Betrieb beeinträchtigt und dringend behoben werden muss. Das Sentiment ist 'negative', da der Nutzer Unzufriedenheit und Dringlichkeit ausdrückt. Der Tag 'network' wurde zugewiesen, da das Problem den Internetzugang betrifft. Das verantwortliche Team ist die 'hardware_network_team', da sie für Netzwerkprobleme zuständig ist. Die Konfidenz ist hoch, da die Informationen klar und eindeutig sind."
+  }
+}
+2025-08-30 22:29:07,557 - INFO - n8n_mistral-small-latest - TKT-001: Evaluation score: 5
+2025-08-30 22:29:07,559 - INFO - n8n_mistral-small-latest - TKT-002: Start processing ticket event...
+2025-08-30 22:29:11,241 - DEBUG - n8n_mistral-small-latest - Response status code: 200
+2025-08-30 22:29:11,241 - DEBUG - n8n_mistral-small-latest - Received classification data: {'ticket_type': 'incident', 'ticket_priority': 'medium', 'ticket_sentiment': 'neutral', 'ticket_tags': ['software'], 'responsible_team': 'software_team', 'confidence_score': 0.9, 'suggested_action': 'Zuerst sollte der Benutzer gebeten werden, die genaue Fehlermeldung und den Dateipfad zu überprüfen. Falls der Dateipfad tatsächlich zu lang ist, kann der Benutzer die Datei in einen Ordner mit einem kürzeren Pfad verschieben oder die Datei in mehrere kleinere Dateien aufteilen. Falls das Problem weiterhin besteht, sollte der Benutzer den IT-Support kontaktieren, um weitere Unterstützung zu erhalten. Der IT-Support kann dann die Datei überprüfen und gegebenenfalls weitere Maßnahmen ergreifen, um das Problem zu beheben.', 'reasoning': "Der Ticket-Typ wurde als 'incident' klassifiziert, da es sich um eine unerwartete Störung handelt, die die Nutzung einer Datei in OneDrive betrifft. Die Priorität wurde als 'medium' eingestuft, da das Problem zwar lästig ist, aber keine dringende Geschäftsunterbrechung darstellt. Das Sentiment wurde als 'neutral' bewertet, da der Benutzer keine starke Emotion in der Beschreibung ausdrückt. Der Tag 'software' wurde zugewiesen, da das Problem mit der Software OneDrive zusammenhängt. Das verantwortliche Team wurde als 'software_team' festgelegt, da sie für die Behebung von Softwareproblemen zuständig sind. Die Konfidenz wurde mit 0.9 bewertet, da die Informationen im Ticket klar und spezifisch sind."}
+2025-08-30 22:29:11,243 - DEBUG - n8n_mistral-small-latest - Ticket: {
+  "id": "TKT-002",
+  "subject": "OneDrive Datei kann nicht geöffnet werden",
+  "body": "Wenn ich eine Datei in OneDrive lokal öffne, kommt die Fehlermeldung, dass der Dateipfad zu lang ist.",
+  "status": "open",
+  "assigned_to": "software_team",
+  "classification": {
+    "ticket_type": "incident",
+    "ticket_priority": "medium",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "software"
+    ],
+    "responsible_team": "software_team",
+    "confidence_score": 0.9,
+    "suggested_action": "Zuerst sollte der Benutzer gebeten werden, die genaue Fehlermeldung und den Dateipfad zu überprüfen. Falls der Dateipfad tatsächlich zu lang ist, kann der Benutzer die Datei in einen Ordner mit einem kürzeren Pfad verschieben oder die Datei in mehrere kleinere Dateien aufteilen. Falls das Problem weiterhin besteht, sollte der Benutzer den IT-Support kontaktieren, um weitere Unterstützung zu erhalten. Der IT-Support kann dann die Datei überprüfen und gegebenenfalls weitere Maßnahmen ergreifen, um das Problem zu beheben.",
+    "reasoning": "Der Ticket-Typ wurde als 'incident' klassifiziert, da es sich um eine unerwartete Störung handelt, die die Nutzung einer Datei in OneDrive betrifft. Die Priorität wurde als 'medium' eingestuft, da das Problem zwar lästig ist, aber keine dringende Geschäftsunterbrechung darstellt. Das Sentiment wurde als 'neutral' bewertet, da der Benutzer keine starke Emotion in der Beschreibung ausdrückt. Der Tag 'software' wurde zugewiesen, da das Problem mit der Software OneDrive zusammenhängt. Das verantwortliche Team wurde als 'software_team' festgelegt, da sie für die Behebung von Softwareproblemen zuständig sind. Die Konfidenz wurde mit 0.9 bewertet, da die Informationen im Ticket klar und spezifisch sind."
+  }
+}
+2025-08-30 22:29:11,244 - WARNING - n8n_mistral-small-latest - TKT-002: Discrepancy actual: TicketPriority.MEDIUM <> expected: TicketPriority.HIGH
+2025-08-30 22:29:11,246 - WARNING - n8n_mistral-small-latest - TKT-002: Discrepancy actual: TicketSentiment.NEUTRAL <> expected: TicketSentiment.NEGATIVE
+2025-08-30 22:29:11,247 - INFO - n8n_mistral-small-latest - TKT-002: Evaluation score: 3
+2025-08-30 22:29:11,249 - INFO - n8n_mistral-small-latest - TKT-003: Start processing ticket event...
+2025-08-30 22:29:15,119 - DEBUG - n8n_mistral-small-latest - Response status code: 200
+2025-08-30 22:29:15,120 - DEBUG - n8n_mistral-small-latest - Received classification data: {'ticket_type': 'service_request', 'ticket_priority': 'medium', 'ticket_sentiment': 'neutral', 'ticket_tags': ['software'], 'responsible_team': 'it_support', 'confidence_score': 0.9, 'suggested_action': 'Der IT-Support sollte den PDFXChange auf dem Laptop des Mitarbeiters installieren. Dazu sollte der Support-Mitarbeiter den Laptop des Mitarbeiters in Augenschein nehmen und die Software installieren. Falls der Mitarbeiter nicht anwesend ist, sollte der Support-Mitarbeiter den Laptop in die IT-Abteilung bringen und die Installation dort durchführen. Nach der Installation sollte der Support-Mitarbeiter den Mitarbeiter informieren, dass die Installation erfolgreich durchgeführt wurde. Falls der Mitarbeiter spezielle Anforderungen an die Installation hat, sollte der Support-Mitarbeiter diese klären und entsprechend handeln.', 'reasoning': "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine Routineanfrage handelt, die keine Störung anzeigt, aber IT-Unterstützung erfordert. Die Priorität wurde als 'medium' eingestuft, da es sich um eine Standardanfrage handelt, die geplant werden kann. Das Sentiment wurde als 'neutral' eingestuft, da der Mitarbeiter weder Zufriedenheit noch Unzufriedenheit ausdrückt. Der Tag 'software' wurde zugewiesen, da es sich um eine Softwareinstallation handelt. Das verantwortliche Team wurde als 'it_support' eingestuft, da es sich um eine Routineanfrage handelt, die vom ersten Level Support bearbeitet werden kann. Der Konfidenzscore wurde auf 0.9 gesetzt, da die Klassifizierung klar und eindeutig ist."}
+2025-08-30 22:29:15,121 - DEBUG - n8n_mistral-small-latest - Ticket: {
+  "id": "TKT-003",
+  "subject": "PDFXChange installieren",
+  "body": "Hallo, ich brauche den PDFXChange auf meinem Laptop. Könnt ihr mir diesen bitte installieren.",
+  "status": "open",
+  "assigned_to": "it_support",
+  "classification": {
+    "ticket_type": "service_request",
+    "ticket_priority": "medium",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "software"
+    ],
+    "responsible_team": "it_support",
+    "confidence_score": 0.9,
+    "suggested_action": "Der IT-Support sollte den PDFXChange auf dem Laptop des Mitarbeiters installieren. Dazu sollte der Support-Mitarbeiter den Laptop des Mitarbeiters in Augenschein nehmen und die Software installieren. Falls der Mitarbeiter nicht anwesend ist, sollte der Support-Mitarbeiter den Laptop in die IT-Abteilung bringen und die Installation dort durchführen. Nach der Installation sollte der Support-Mitarbeiter den Mitarbeiter informieren, dass die Installation erfolgreich durchgeführt wurde. Falls der Mitarbeiter spezielle Anforderungen an die Installation hat, sollte der Support-Mitarbeiter diese klären und entsprechend handeln.",
+    "reasoning": "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine Routineanfrage handelt, die keine Störung anzeigt, aber IT-Unterstützung erfordert. Die Priorität wurde als 'medium' eingestuft, da es sich um eine Standardanfrage handelt, die geplant werden kann. Das Sentiment wurde als 'neutral' eingestuft, da der Mitarbeiter weder Zufriedenheit noch Unzufriedenheit ausdrückt. Der Tag 'software' wurde zugewiesen, da es sich um eine Softwareinstallation handelt. Das verantwortliche Team wurde als 'it_support' eingestuft, da es sich um eine Routineanfrage handelt, die vom ersten Level Support bearbeitet werden kann. Der Konfidenzscore wurde auf 0.9 gesetzt, da die Klassifizierung klar und eindeutig ist."
+  }
+}
+2025-08-30 22:29:15,121 - WARNING - n8n_mistral-small-latest - TKT-003: Discrepancy actual: ResponsibleTeam.IT_SUPPORT <> expected: ResponsibleTeam.SOFTWARE_TEAM
+2025-08-30 22:29:15,122 - INFO - n8n_mistral-small-latest - TKT-003: Evaluation score: 4
+2025-08-30 22:29:15,123 - INFO - n8n_mistral-small-latest - TKT-004: Start processing ticket event...
+2025-08-30 22:29:18,637 - DEBUG - n8n_mistral-small-latest - Response status code: 200
+2025-08-30 22:29:18,638 - DEBUG - n8n_mistral-small-latest - Received classification data: {'ticket_type': 'service_request', 'ticket_priority': 'medium', 'ticket_sentiment': 'neutral', 'ticket_tags': ['hardware', 'onboarding'], 'responsible_team': 'it_support', 'confidence_score': 0.95, 'suggested_action': 'Der IT-Support sollte die Vorbereitungen für den neuen Mitarbeiter beginnen, indem er einen Laptop und ein Firmenhandy bestellt und die notwendigen Programme und Zugänge einrichtet. Da das Eintrittsdatum noch einige Monate entfernt ist, kann die Vorbereitung geplant werden. Es sollte sichergestellt werden, dass alle notwendigen Zugänge und Programme wie bei den anderen Kollegen der Abteilung eingerichtet werden. Der IT-Support sollte den Fortschritt der Vorbereitungen dokumentieren und sicherstellen, dass alles bis zum Eintrittsdatum fertig ist.', 'reasoning': "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine Routineanfrage handelt, die keine Störung anzeigt, aber IT-Unterstützung erfordert. Die Priorität wurde auf 'medium' gesetzt, da es sich um eine geplante Anfrage handelt, die nicht dringend ist, aber dennoch rechtzeitig erledigt werden muss. Das Sentiment wurde als 'neutral' eingestuft, da der Tickettext weder Zufriedenheit noch Unzufriedenheit ausdrückt. Die Tags 'hardware' und 'onboarding' wurden gewählt, da es sich um die Bereitstellung von Hardware und die Einarbeitung eines neuen Mitarbeiters handelt. Das verantwortliche Team ist 'it_support', da es sich um eine allgemeine IT-Anfrage handelt, die von der ersten Ebene des Supports bearbeitet werden kann. Die Konfidenz wurde auf 0.95 gesetzt, da die Informationen im Ticket klar und eindeutig sind."}
+2025-08-30 22:29:18,640 - DEBUG - n8n_mistral-small-latest - Ticket: {
+  "id": "TKT-004",
+  "subject": "Neuer Mitarbeiter ab 01.11.2025",
+  "body": "Hallo IT, bitte alles für unseren neuen Mitarbeiter in der Abteilung Kalkulation vorbereiten. \n        Er erhält einen Laptop und ein Firmenhandy. Die Programme und Zugänge gleich einrichten, wie bei den anderen Kollegen der Abteilung.\n        Eintrittsdatum ist der 01.11.2025. Danke!",
+  "status": "open",
+  "assigned_to": "it_support",
+  "classification": {
+    "ticket_type": "service_request",
+    "ticket_priority": "medium",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "hardware",
+      "onboarding"
+    ],
+    "responsible_team": "it_support",
+    "confidence_score": 0.95,
+    "suggested_action": "Der IT-Support sollte die Vorbereitungen für den neuen Mitarbeiter beginnen, indem er einen Laptop und ein Firmenhandy bestellt und die notwendigen Programme und Zugänge einrichtet. Da das Eintrittsdatum noch einige Monate entfernt ist, kann die Vorbereitung geplant werden. Es sollte sichergestellt werden, dass alle notwendigen Zugänge und Programme wie bei den anderen Kollegen der Abteilung eingerichtet werden. Der IT-Support sollte den Fortschritt der Vorbereitungen dokumentieren und sicherstellen, dass alles bis zum Eintrittsdatum fertig ist.",
+    "reasoning": "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine Routineanfrage handelt, die keine Störung anzeigt, aber IT-Unterstützung erfordert. Die Priorität wurde auf 'medium' gesetzt, da es sich um eine geplante Anfrage handelt, die nicht dringend ist, aber dennoch rechtzeitig erledigt werden muss. Das Sentiment wurde als 'neutral' eingestuft, da der Tickettext weder Zufriedenheit noch Unzufriedenheit ausdrückt. Die Tags 'hardware' und 'onboarding' wurden gewählt, da es sich um die Bereitstellung von Hardware und die Einarbeitung eines neuen Mitarbeiters handelt. Das verantwortliche Team ist 'it_support', da es sich um eine allgemeine IT-Anfrage handelt, die von der ersten Ebene des Supports bearbeitet werden kann. Die Konfidenz wurde auf 0.95 gesetzt, da die Informationen im Ticket klar und eindeutig sind."
+  }
+}
+2025-08-30 22:29:18,641 - WARNING - n8n_mistral-small-latest - TKT-004: Discrepancy actual: TicketSentiment.NEUTRAL <> expected: TicketSentiment.POSITIVE
+2025-08-30 22:29:18,642 - WARNING - n8n_mistral-small-latest - TKT-004: Discrepancy actual: [<TicketTags.HARDWARE: 'hardware'>, <TicketTags.ONBOARDING: 'onboarding'>] <> expected: [<TicketTags.ONBOARDING: 'onboarding'>]
+2025-08-30 22:29:18,644 - INFO - n8n_mistral-small-latest - TKT-004: Evaluation score: 3
+2025-08-30 22:29:18,646 - INFO - n8n_mistral-small-latest - TKT-005: Start processing ticket event...
+2025-08-30 22:29:23,018 - DEBUG - n8n_mistral-small-latest - Response status code: 200
+2025-08-30 22:29:23,019 - DEBUG - n8n_mistral-small-latest - Received classification data: {'ticket_type': 'change_request', 'ticket_priority': 'medium', 'ticket_sentiment': 'neutral', 'ticket_tags': ['software'], 'responsible_team': 'datawarehouse_businessintelligence_team', 'confidence_score': 0.9, 'suggested_action': 'Der Ticketerwähnung nach handelt es sich um eine Erweiterung der Datenquelle für einen Power BI Bericht. Der erste Schritt sollte sein, die Anforderungen genau zu klären. Dazu sollte ein Meeting mit der KORE Abteilung organisiert werden, um die genauen Datenanforderungen und den Umfang der Änderungen zu besprechen. Anschließend sollte ein Plan für die Implementierung erstellt und die Änderungen in der Datenquelle vorgenommen werden. Nach der Implementierung sollte der Bericht getestet und sicherstellt werden, dass die neuen Daten korrekt angezeigt werden. Schließlich sollte der Bericht an die KORE Abteilung zurückgemeldet werden, um die Änderungen zu bestätigen und sicherzustellen, dass alle Anforderungen erfüllt sind.', 'reasoning': "Der Tickettyp wurde als 'change_request' klassifiziert, da es sich um eine formelle Anfrage zur Erweiterung einer Datenquelle handelt, die eine Änderung des IT-Umfelds erfordert. Die Priorität wurde als 'medium' eingestuft, da es sich um eine wichtige, aber nicht dringende Anfrage handelt, die geplant und implementiert werden kann. Das Sentiment wurde als 'neutral' eingestuft, da der Tickettext weder positive noch negative Emotionen ausdrückt. Der Tag 'software' wurde zugewiesen, da die Anfrage sich auf eine Datenquelle und einen Power BI Bericht bezieht, die beide Software-Komponenten sind. Das verantwortliche Team wurde als 'datawarehouse_businessintelligence_team' eingestuft, da die Anfrage sich auf eine Datenquelle und einen Power BI Bericht bezieht, die in den Zuständigkeitsbereich dieses Teams fallen. Der Konfidenzscore wurde auf 0.9 gesetzt, da die Klassifizierung auf klaren und spezifischen Informationen im Tickettext basiert."}
+2025-08-30 22:29:23,021 - DEBUG - n8n_mistral-small-latest - Ticket: {
+  "id": "TKT-005",
+  "subject": "Power BI Bericht Datenquelle erweitern",
+  "body": "Wir brauchen zusätzliche Daten in der Datenquelle für unseren KORE Power BI Bericht.\n        Die benötigten Buchungen sind die Verkaufsbuchungen. Bitte um Rückmeldung wie bald ihr das umsetzen könnt.\n        Für weitere Fragen meldet euch in der KORE Abteilung. Danke.",
+  "status": "open",
+  "assigned_to": "datawarehouse_businessintelligence_team",
+  "classification": {
+    "ticket_type": "change_request",
+    "ticket_priority": "medium",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "software"
+    ],
+    "responsible_team": "datawarehouse_businessintelligence_team",
+    "confidence_score": 0.9,
+    "suggested_action": "Der Ticketerwähnung nach handelt es sich um eine Erweiterung der Datenquelle für einen Power BI Bericht. Der erste Schritt sollte sein, die Anforderungen genau zu klären. Dazu sollte ein Meeting mit der KORE Abteilung organisiert werden, um die genauen Datenanforderungen und den Umfang der Änderungen zu besprechen. Anschließend sollte ein Plan für die Implementierung erstellt und die Änderungen in der Datenquelle vorgenommen werden. Nach der Implementierung sollte der Bericht getestet und sicherstellt werden, dass die neuen Daten korrekt angezeigt werden. Schließlich sollte der Bericht an die KORE Abteilung zurückgemeldet werden, um die Änderungen zu bestätigen und sicherzustellen, dass alle Anforderungen erfüllt sind.",
+    "reasoning": "Der Tickettyp wurde als 'change_request' klassifiziert, da es sich um eine formelle Anfrage zur Erweiterung einer Datenquelle handelt, die eine Änderung des IT-Umfelds erfordert. Die Priorität wurde als 'medium' eingestuft, da es sich um eine wichtige, aber nicht dringende Anfrage handelt, die geplant und implementiert werden kann. Das Sentiment wurde als 'neutral' eingestuft, da der Tickettext weder positive noch negative Emotionen ausdrückt. Der Tag 'software' wurde zugewiesen, da die Anfrage sich auf eine Datenquelle und einen Power BI Bericht bezieht, die beide Software-Komponenten sind. Das verantwortliche Team wurde als 'datawarehouse_businessintelligence_team' eingestuft, da die Anfrage sich auf eine Datenquelle und einen Power BI Bericht bezieht, die in den Zuständigkeitsbereich dieses Teams fallen. Der Konfidenzscore wurde auf 0.9 gesetzt, da die Klassifizierung auf klaren und spezifischen Informationen im Tickettext basiert."
+  }
+}
+2025-08-30 22:29:23,023 - INFO - n8n_mistral-small-latest - TKT-005: Evaluation score: 5
+2025-08-30 22:29:23,024 - INFO - n8n_mistral-small-latest - TKT-006: Start processing ticket event...
+2025-08-30 22:29:27,036 - DEBUG - n8n_mistral-small-latest - Response status code: 200
+2025-08-30 22:29:27,036 - DEBUG - n8n_mistral-small-latest - Received classification data: {'ticket_type': 'service_request', 'ticket_priority': 'medium', 'ticket_sentiment': 'neutral', 'ticket_tags': ['printing'], 'responsible_team': 'it_support', 'confidence_score': 0.9, 'suggested_action': 'Der Druckerübersiedelungsauftrag sollte von der IT-Support-Mannschaft bearbeitet werden. Zuerst sollte der IT-Support die Verfügbarkeit des Druckers im QM Büro prüfen und sicherstellen, dass alle notwendigen Kabel und Anschlüsse vorhanden sind. Danach sollte der Drucker physisch umgestellt und die Netzwerkverbindung getestet werden. Abschließend sollte der IT-Support den Drucker im QM Büro in Betrieb nehmen und sicherstellen, dass er korrekt funktioniert. Der IT-Support sollte auch sicherstellen, dass alle notwendigen Berechtigungen und Zugriffsrechte für die Benutzer im QM Büro eingerichtet sind.', 'reasoning': "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine geplante Anfrage handelt, die keine Störung anzeigt, aber IT-Unterstützung erfordert. Die Priorität wurde als 'medium' eingestuft, da es sich um eine routinemäßige Anfrage handelt, die keine sofortige Aufmerksamkeit erfordert. Das Sentiment wurde als 'neutral' eingestuft, da der Benutzer weder Zufriedenheit noch Unzufriedenheit ausdrückt. Der Tag 'printing' wurde zugewiesen, da das Ticket mit dem Umzug eines Druckers zusammenhängt. Das verantwortliche Team wurde als 'it_support' eingestuft, da es sich um eine routinemäßige Anfrage handelt, die von der ersten Ebene des Supports bearbeitet werden kann. Der Konfidenzscore wurde auf 0.9 gesetzt, da die Informationen im Ticket klar und präzise sind und eine hohe Zuversicht in die Klassifizierung besteht."}
+2025-08-30 22:29:27,037 - DEBUG - n8n_mistral-small-latest - Ticket: {
+  "id": "TKT-006",
+  "subject": "Drucker übersiedeln vom IT Büro ins QM Büro",
+  "body": "Wie letztens besprochen, möchten wir den Drucker aus dem IT Büro ins QM Büro stellen.\n        Bitte bei Gelegenheit alles vorbereiten und durchführen.\n        ",
+  "status": "open",
+  "assigned_to": "it_support",
+  "classification": {
+    "ticket_type": "service_request",
+    "ticket_priority": "medium",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "printing"
+    ],
+    "responsible_team": "it_support",
+    "confidence_score": 0.9,
+    "suggested_action": "Der Druckerübersiedelungsauftrag sollte von der IT-Support-Mannschaft bearbeitet werden. Zuerst sollte der IT-Support die Verfügbarkeit des Druckers im QM Büro prüfen und sicherstellen, dass alle notwendigen Kabel und Anschlüsse vorhanden sind. Danach sollte der Drucker physisch umgestellt und die Netzwerkverbindung getestet werden. Abschließend sollte der IT-Support den Drucker im QM Büro in Betrieb nehmen und sicherstellen, dass er korrekt funktioniert. Der IT-Support sollte auch sicherstellen, dass alle notwendigen Berechtigungen und Zugriffsrechte für die Benutzer im QM Büro eingerichtet sind.",
+    "reasoning": "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine geplante Anfrage handelt, die keine Störung anzeigt, aber IT-Unterstützung erfordert. Die Priorität wurde als 'medium' eingestuft, da es sich um eine routinemäßige Anfrage handelt, die keine sofortige Aufmerksamkeit erfordert. Das Sentiment wurde als 'neutral' eingestuft, da der Benutzer weder Zufriedenheit noch Unzufriedenheit ausdrückt. Der Tag 'printing' wurde zugewiesen, da das Ticket mit dem Umzug eines Druckers zusammenhängt. Das verantwortliche Team wurde als 'it_support' eingestuft, da es sich um eine routinemäßige Anfrage handelt, die von der ersten Ebene des Supports bearbeitet werden kann. Der Konfidenzscore wurde auf 0.9 gesetzt, da die Informationen im Ticket klar und präzise sind und eine hohe Zuversicht in die Klassifizierung besteht."
+  }
+}
+2025-08-30 22:29:27,037 - WARNING - n8n_mistral-small-latest - TKT-006: Discrepancy actual: TicketType.SERVICE_REQUEST <> expected: TicketType.CHANGE_REQUEST
+2025-08-30 22:29:27,038 - WARNING - n8n_mistral-small-latest - TKT-006: Discrepancy actual: TicketPriority.MEDIUM <> expected: TicketPriority.LOW
+2025-08-30 22:29:27,038 - WARNING - n8n_mistral-small-latest - TKT-006: Discrepancy actual: ResponsibleTeam.IT_SUPPORT <> expected: ResponsibleTeam.HARDWARE_NETWORK_TEAM
+2025-08-30 22:29:27,039 - INFO - n8n_mistral-small-latest - TKT-006: Evaluation score: 2
+2025-08-30 22:29:27,039 - INFO - n8n_mistral-small-latest - TKT-007: Start processing ticket event...
+2025-08-30 22:29:30,227 - DEBUG - n8n_mistral-small-latest - Response status code: 200
+2025-08-30 22:29:30,227 - DEBUG - n8n_mistral-small-latest - Received classification data: {'ticket_type': 'service_request', 'ticket_priority': 'high', 'ticket_sentiment': 'neutral', 'ticket_tags': ['hardware'], 'responsible_team': 'it_support', 'confidence_score': 0.9, 'suggested_action': 'Der IT-Support sollte den Mitarbeiter kontaktieren, um das beschädigte Gerät zu inspizieren und ein Ersatzgerät bereitzustellen. Es sollte überprüft werden, ob das Gerät noch repariert werden kann oder ob ein vollständiger Austausch notwendig ist. Der Mitarbeiter sollte angewiesen werden, das beschädigte Gerät zur Reparatur oder zum Austausch einzureichen. Falls das Gerät nicht mehr repariert werden kann, sollte ein neues Gerät bestellt und konfiguriert werden. Der Mitarbeiter sollte über den Fortschritt des Prozesses informiert werden.', 'reasoning': "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine Routineanfrage für ein Ersatzgerät handelt, die nicht auf einen Systemausfall hinweist. Die Priorität wurde auf 'high' gesetzt, da der Mitarbeiter ohne funktionierendes Handy möglicherweise in seiner Arbeit eingeschränkt ist. Das Sentiment wurde als 'neutral' eingestuft, da der Mitarbeiter keine starke Emotion in seiner Anfrage zeigt. Der Tag 'hardware' wurde zugewiesen, da es sich um ein Problem mit einem physischen Gerät handelt. Das verantwortliche Team ist 'it_support', da es sich um eine Anfrage handelt, die von der ersten Ebene des Supports bearbeitet werden kann. Die Konfidenz wurde auf 0.9 gesetzt, da die Informationen im Ticket klar und eindeutig sind."}
+2025-08-30 22:29:30,228 - DEBUG - n8n_mistral-small-latest - Ticket: {
+  "id": "TKT-007",
+  "subject": "Handy Display kaputt",
+  "body": "Hallo IT, mein Firmenhandy ist auf den Boden gefallen und jetzt ist das Display kaputt.\n        Es hat mehrere Risse und funktioniert nicht mehr richtig. Ich brauche bitte ein Ersatzgerät.\n        ",
+  "status": "open",
+  "assigned_to": "it_support",
+  "classification": {
+    "ticket_type": "service_request",
+    "ticket_priority": "high",
+    "ticket_sentiment": "neutral",
+    "ticket_tags": [
+      "hardware"
+    ],
+    "responsible_team": "it_support",
+    "confidence_score": 0.9,
+    "suggested_action": "Der IT-Support sollte den Mitarbeiter kontaktieren, um das beschädigte Gerät zu inspizieren und ein Ersatzgerät bereitzustellen. Es sollte überprüft werden, ob das Gerät noch repariert werden kann oder ob ein vollständiger Austausch notwendig ist. Der Mitarbeiter sollte angewiesen werden, das beschädigte Gerät zur Reparatur oder zum Austausch einzureichen. Falls das Gerät nicht mehr repariert werden kann, sollte ein neues Gerät bestellt und konfiguriert werden. Der Mitarbeiter sollte über den Fortschritt des Prozesses informiert werden.",
+    "reasoning": "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine Routineanfrage für ein Ersatzgerät handelt, die nicht auf einen Systemausfall hinweist. Die Priorität wurde auf 'high' gesetzt, da der Mitarbeiter ohne funktionierendes Handy möglicherweise in seiner Arbeit eingeschränkt ist. Das Sentiment wurde als 'neutral' eingestuft, da der Mitarbeiter keine starke Emotion in seiner Anfrage zeigt. Der Tag 'hardware' wurde zugewiesen, da es sich um ein Problem mit einem physischen Gerät handelt. Das verantwortliche Team ist 'it_support', da es sich um eine Anfrage handelt, die von der ersten Ebene des Supports bearbeitet werden kann. Die Konfidenz wurde auf 0.9 gesetzt, da die Informationen im Ticket klar und eindeutig sind."
+  }
+}
+2025-08-30 22:29:30,229 - WARNING - n8n_mistral-small-latest - TKT-007: Discrepancy actual: ResponsibleTeam.IT_SUPPORT <> expected: ResponsibleTeam.HARDWARE_NETWORK_TEAM
+2025-08-30 22:29:30,229 - INFO - n8n_mistral-small-latest - TKT-007: Evaluation score: 4
+2025-08-30 22:29:30,230 - INFO - n8n_mistral-small-latest - Experiment completed.

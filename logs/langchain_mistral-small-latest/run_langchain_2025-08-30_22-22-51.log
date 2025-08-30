@@ -1,0 +1,490 @@
+2025-08-30 22:22:51,761 - INFO - langchain_mistral-small-latest - Starting experiment with agent run function 'run_langchain' and model 'ModelName.MISTRAL_SMALL_LATEST'
+2025-08-30 22:22:51,761 - INFO - langchain_mistral-small-latest - TKT-001: Start processing ticket event...
+2025-08-30 22:22:51,761 - DEBUG - langchain_mistral-small-latest - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment, such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents. It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service. Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for significant impact for one or a few employees.)
+   - medium (Standard issues that can be scheduled for regular handling, it's the default priority level.)
+   - low (Minor issues or requests that can be handled when convenient. The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components other than printers (e.g. computers, laptops, phones, tablets, servers))
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+
+
+## Output format instructions
+{{output_format_instructions}}
+
+2025-08-30 22:22:51,771 - DEBUG - langchain_mistral-small-latest - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: {subject}
+Ticket body: {body}
+
+2025-08-30 22:22:54,659 - ERROR - langchain_mistral-small-latest - Error in classify_ticket: Failed to parse TicketClassification from completion {"ticket_type": "incident", "priority": "high", "sentiment": "negative", "tags": ["network"], "responsible_team": "hardware_network_team", "confidence_score": 0.9, "initial_action": "Zuerst sollte der Netzwerkstatus \u00fcberpr\u00fcft werden, um festzustellen, ob es ein allgemeines Netzwerkproblem gibt. Falls das Problem auf einen bestimmten Bereich beschr\u00e4nkt ist, sollte der Netzwerkrouter oder Switch \u00fcberpr\u00fcft werden. Falls das Problem weiterhin besteht, sollte der Internetdienstanbieter kontaktiert werden, um festzustellen, ob es ein Problem mit der Internetverbindung gibt. Falls das Problem weiterhin besteht, sollte ein Techniker vor Ort geschickt werden, um das Problem zu beheben.", "reasoning": "Der Ticket-Typ ist ein \"incident\", da es sich um eine unvorhergesehene Unterbrechung des Internetzugangs handelt, die die Arbeit des Teams beeintr\u00e4chtigt. Die Priorit\u00e4t ist \"high\", da das Problem die Arbeit des Teams blockiert und dringend behoben werden muss. Der Sentiment ist \"negative\", da der Benutzer frustriert ist und eine schnelle L\u00f6sung verlangt. Der Tag ist \"network\", da das Problem mit dem Internetzugang zusammenh\u00e4ngt. Das verantwortliche Team ist das \"hardware_network_team\", da das Problem mit der Netzwerkinfrastruktur zusammenh\u00e4ngt. Die Zuversicht ist hoch, da die Informationen im Ticket klar sind und auf ein Netzwerkproblem hinweisen."}. Got: 2 validation errors for TicketClassification
+ticket_priority
+  Field required [type=missing, input_value={'ticket_type': 'incident...werkproblem hinweisen.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+ticket_sentiment
+  Field required [type=missing, input_value={'ticket_type': 'incident...werkproblem hinweisen.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE 
+2025-08-30 22:22:54,660 - WARNING - langchain_mistral-small-latest - TKT-001: Ticket event not classified.
+2025-08-30 22:22:54,660 - INFO - langchain_mistral-small-latest - TKT-001: Evaluation score: 0
+2025-08-30 22:22:54,661 - INFO - langchain_mistral-small-latest - TKT-002: Start processing ticket event...
+2025-08-30 22:22:54,661 - DEBUG - langchain_mistral-small-latest - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment, such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents. It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service. Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for significant impact for one or a few employees.)
+   - medium (Standard issues that can be scheduled for regular handling, it's the default priority level.)
+   - low (Minor issues or requests that can be handled when convenient. The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components other than printers (e.g. computers, laptops, phones, tablets, servers))
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+
+
+## Output format instructions
+{{output_format_instructions}}
+
+2025-08-30 22:22:54,661 - DEBUG - langchain_mistral-small-latest - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: {subject}
+Ticket body: {body}
+
+2025-08-30 22:22:57,979 - ERROR - langchain_mistral-small-latest - Error in classify_ticket: Failed to parse TicketClassification from completion {"ticket_type": "incident", "priority": "medium", "sentiment": "neutral", "tags": ["software"], "responsible_team": "software_team", "confidence_score": 0.9, "initial_action": "Zuerst sollte der Benutzer \u00fcberpr\u00fcfen, ob der Dateipfad tats\u00e4chlich zu lang ist. Falls ja, kann der Benutzer die Datei in einen k\u00fcrzeren Pfad verschieben oder die Datei in mehrere kleinere Dateien aufteilen. Falls das Problem weiterhin besteht, sollte der Benutzer den IT-Support kontaktieren, um weitere Unterst\u00fctzung zu erhalten. Der IT-Support kann dann die Datei \u00fcberpr\u00fcfen und gegebenenfalls reparieren oder den Benutzer anweisen, die Datei erneut hochzuladen.", "reasoning": "Der Ticket-Typ wurde als 'incident' klassifiziert, da es sich um eine unerwartete St\u00f6rung handelt, die die Nutzung einer Datei in OneDrive beeintr\u00e4chtigt. Die Priorit\u00e4t wurde als 'medium' eingestuft, da das Problem zwar l\u00e4stig ist, aber nicht dringend ist und den Benutzer nicht vollst\u00e4ndig blockiert. Das Sentiment wurde als 'neutral' eingestuft, da der Benutzer keine starke Emotion ausdr\u00fcckt. Der Tag 'software' wurde zugewiesen, da das Problem mit der Software OneDrive zusammenh\u00e4ngt. Das verantwortliche Team wurde als 'software_team' eingestuft, da sie f\u00fcr die Behebung von Softwareproblemen zust\u00e4ndig sind. Die Konfidenz wurde mit 0,9 bewertet, da die Informationen im Ticket klar und spezifisch sind."}. Got: 2 validation errors for TicketClassification
+ticket_priority
+  Field required [type=missing, input_value={'ticket_type': 'incident...r und spezifisch sind."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+ticket_sentiment
+  Field required [type=missing, input_value={'ticket_type': 'incident...r und spezifisch sind."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE 
+2025-08-30 22:22:57,980 - WARNING - langchain_mistral-small-latest - TKT-002: Ticket event not classified.
+2025-08-30 22:22:57,980 - INFO - langchain_mistral-small-latest - TKT-002: Evaluation score: 0
+2025-08-30 22:22:57,980 - INFO - langchain_mistral-small-latest - TKT-003: Start processing ticket event...
+2025-08-30 22:22:57,981 - DEBUG - langchain_mistral-small-latest - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment, such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents. It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service. Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for significant impact for one or a few employees.)
+   - medium (Standard issues that can be scheduled for regular handling, it's the default priority level.)
+   - low (Minor issues or requests that can be handled when convenient. The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components other than printers (e.g. computers, laptops, phones, tablets, servers))
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+
+
+## Output format instructions
+{{output_format_instructions}}
+
+2025-08-30 22:22:57,981 - DEBUG - langchain_mistral-small-latest - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: {subject}
+Ticket body: {body}
+
+2025-08-30 22:23:00,622 - ERROR - langchain_mistral-small-latest - Error in classify_ticket: Failed to parse TicketClassification from completion {"ticket_type": "service_request", "ticket_priority": "medium", "ticket_publisher_sentiment": "neutral", "tags": ["software"], "responsible_team": "it_support", "confidence_score": 0.9, "initial_action": "Der IT-Support sollte den PDFXChange auf dem Laptop des Mitarbeiters installieren. Dazu sollte der IT-Support zun\u00e4chst den Laptop des Mitarbeiters identifizieren und sicherstellen, dass die Softwarelizenz verf\u00fcgbar ist. Anschlie\u00dfend kann die Installation durchgef\u00fchrt werden. Der IT-Support sollte den Mitarbeiter \u00fcber den Fortschritt der Installation informieren und sicherstellen, dass die Software korrekt installiert wurde und funktioniert. Nach Abschluss der Installation sollte der IT-Support den Mitarbeiter \u00fcber die Verwendung der Software informieren und sicherstellen, dass er mit der Software vertraut ist.", "classification_reasoning": "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine Routineanfrage handelt, die keine St\u00f6rung anzeigt, aber IT-Unterst\u00fctzung erfordert. Die Priorit\u00e4t wurde als 'medium' eingestuft, da es sich um eine Standardanfrage handelt, die geplant werden kann. Das Sentiment des Ticketverfassers wurde als 'neutral' eingestuft, da der Mitarbeiter weder Zufriedenheit noch Unzufriedenheit ausdr\u00fcckt. Der Tag 'software' wurde zugewiesen, da es sich um eine Anfrage zur Installation einer Software handelt. Das verantwortliche Team wurde als 'it_support' eingestuft, da es sich um eine allgemeine IT-Anfrage handelt, die vom ersten Level Support-Team gehandhabt werden kann."}. Got: 1 validation error for TicketClassification
+ticket_sentiment
+  Field required [type=missing, input_value={'ticket_type': 'service_...ehandhabt werden kann."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE 
+2025-08-30 22:23:00,622 - WARNING - langchain_mistral-small-latest - TKT-003: Ticket event not classified.
+2025-08-30 22:23:00,623 - INFO - langchain_mistral-small-latest - TKT-003: Evaluation score: 0
+2025-08-30 22:23:00,623 - INFO - langchain_mistral-small-latest - TKT-004: Start processing ticket event...
+2025-08-30 22:23:00,623 - DEBUG - langchain_mistral-small-latest - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment, such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents. It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service. Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for significant impact for one or a few employees.)
+   - medium (Standard issues that can be scheduled for regular handling, it's the default priority level.)
+   - low (Minor issues or requests that can be handled when convenient. The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components other than printers (e.g. computers, laptops, phones, tablets, servers))
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+
+
+## Output format instructions
+{{output_format_instructions}}
+
+2025-08-30 22:23:00,623 - DEBUG - langchain_mistral-small-latest - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: {subject}
+Ticket body: {body}
+
+2025-08-30 22:23:04,436 - ERROR - langchain_mistral-small-latest - Error in classify_ticket: Failed to parse TicketClassification from completion {"ticket_type": "service_request", "priority": "medium", "sentiment": "neutral", "tags": ["hardware", "software", "onboarding"], "responsible_team": "it_support", "confidence_score": 0.95, "initial_action": "Der IT-Support sollte die Vorbereitungen f\u00fcr den neuen Mitarbeiter koordinieren. Dazu geh\u00f6rt die Bestellung und Einrichtung des Laptops und des Firmenhandys. Zudem m\u00fcssen die notwendigen Software-Programme und Zug\u00e4nge eingerichtet werden, die den anderen Kollegen der Abteilung Kalkulation entsprechen. Da das Eintrittsdatum noch einige Monate entfernt ist, kann die Vorbereitung geplant und priorisiert werden. Es ist wichtig, sicherzustellen, dass alle notwendigen IT-Ressourcen rechtzeitig verf\u00fcgbar sind, um den Einstieg des neuen Mitarbeiters reibungslos zu gestalten.", "reasoning": "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine geplante Anforderung handelt, die keine St\u00f6rung anzeigt, sondern IT-Unterst\u00fctzung f\u00fcr einen neuen Mitarbeiter erfordert. Die Priorit\u00e4t wurde auf 'medium' gesetzt, da die Anforderung wichtig ist, aber nicht dringend, da das Eintrittsdatum noch in der Zukunft liegt. Das Sentiment wurde als 'neutral' eingestuft, da der Tickettext weder positive noch negative Emotionen zeigt. Die Tags 'hardware', 'software' und 'onboarding' wurden gew\u00e4hlt, da der Ticketinhalt die Bereitstellung von Hardware (Laptop, Firmenhandy) und Software sowie die Vorbereitung f\u00fcr einen neuen Mitarbeiter betrifft. Das verantwortliche Team ist 'it_support', da es sich um eine allgemeine IT-Anfrage handelt, die von der ersten Ebene des Supports bearbeitet werden kann. Die Konfidenz wurde hoch angesetzt, da die Informationen klar und spezifisch sind."}. Got: 2 validation errors for TicketClassification
+ticket_priority
+  Field required [type=missing, input_value={'ticket_type': 'service_...r und spezifisch sind."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+ticket_sentiment
+  Field required [type=missing, input_value={'ticket_type': 'service_...r und spezifisch sind."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE 
+2025-08-30 22:23:04,437 - WARNING - langchain_mistral-small-latest - TKT-004: Ticket event not classified.
+2025-08-30 22:23:04,437 - INFO - langchain_mistral-small-latest - TKT-004: Evaluation score: 0
+2025-08-30 22:23:04,438 - INFO - langchain_mistral-small-latest - TKT-005: Start processing ticket event...
+2025-08-30 22:23:04,438 - DEBUG - langchain_mistral-small-latest - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment, such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents. It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service. Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for significant impact for one or a few employees.)
+   - medium (Standard issues that can be scheduled for regular handling, it's the default priority level.)
+   - low (Minor issues or requests that can be handled when convenient. The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components other than printers (e.g. computers, laptops, phones, tablets, servers))
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+
+
+## Output format instructions
+{{output_format_instructions}}
+
+2025-08-30 22:23:04,438 - DEBUG - langchain_mistral-small-latest - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: {subject}
+Ticket body: {body}
+
+2025-08-30 22:23:07,933 - ERROR - langchain_mistral-small-latest - Error in classify_ticket: Failed to parse TicketClassification from completion {"ticket_type": "service_request", "ticket_priority": "medium", "ticket_publisher_sentiment": "neutral", "tags": ["software", "datawarehouse_businessintelligence_team"], "responsible_team": "datawarehouse_businessintelligence_team", "confidence_score": 0.9, "initial_action": "Zuerst sollte der Verantwortliche des Power BI Berichts kontaktiert werden, um die genauen Anforderungen und Datenquellen zu kl\u00e4ren. Anschlie\u00dfend sollte gepr\u00fcft werden, ob die ben\u00f6tigten Verkaufsbuchungen bereits in der Datenbank vorhanden sind oder ob eine Anpassung der Datenquelle erforderlich ist. Falls eine Anpassung notwendig ist, sollte ein Plan f\u00fcr die Implementierung erstellt und mit dem Anfrager abgestimmt werden. Es ist wichtig, den Zeitrahmen f\u00fcr die Umsetzung zu kl\u00e4ren und sicherzustellen, dass die \u00c4nderungen den Anforderungen entsprechen. Der Anfrager sollte regelm\u00e4\u00dfig \u00fcber den Fortschritt informiert werden, um Transparenz und Zufriedenheit zu gew\u00e4hrleisten.", "reasoning": "Der Ticket-Typ wurde als 'service_request' klassifiziert, da es sich um eine geplante Anfrage handelt, die keine St\u00f6rung anzeigt, sondern IT-Unterst\u00fctzung f\u00fcr eine Erweiterung der Datenquelle in einem Power BI-Bericht erfordert. Die Priorit\u00e4t wurde auf 'medium' gesetzt, da es sich um eine wichtige, aber nicht dringende Anfrage handelt, die geplant werden kann. Das Sentiment des Ticket-Erstellers wurde als 'neutral' eingestuft, da keine besondere Zufriedenheit oder Unzufriedenheit ausgedr\u00fcckt wurde. Die Tags 'software' und 'datawarehouse_businessintelligence_team' wurden zugewiesen, da es sich um eine Software-Anfrage handelt, die speziell den Bereich Data Warehouse und Business Intelligence betrifft. Das verantwortliche Team wurde als 'datawarehouse_businessintelligence_team' festgelegt, da sie die Experten f\u00fcr Power BI und Datenquellen sind. Die Konfidenz wurde auf 0.9 gesetzt, da die Informationen im Ticket klar und spezifisch sind, was eine zuverl\u00e4ssige Klassifizierung erm\u00f6glicht."}. Got: 1 validation error for TicketClassification
+ticket_sentiment
+  Field required [type=missing, input_value={'ticket_type': 'service_...fizierung ermöglicht."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE 
+2025-08-30 22:23:07,933 - WARNING - langchain_mistral-small-latest - TKT-005: Ticket event not classified.
+2025-08-30 22:23:07,934 - INFO - langchain_mistral-small-latest - TKT-005: Evaluation score: 0
+2025-08-30 22:23:07,934 - INFO - langchain_mistral-small-latest - TKT-006: Start processing ticket event...
+2025-08-30 22:23:07,934 - DEBUG - langchain_mistral-small-latest - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment, such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents. It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service. Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for significant impact for one or a few employees.)
+   - medium (Standard issues that can be scheduled for regular handling, it's the default priority level.)
+   - low (Minor issues or requests that can be handled when convenient. The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components other than printers (e.g. computers, laptops, phones, tablets, servers))
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+
+
+## Output format instructions
+{{output_format_instructions}}
+
+2025-08-30 22:23:07,934 - DEBUG - langchain_mistral-small-latest - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: {subject}
+Ticket body: {body}
+
+2025-08-30 22:23:11,422 - ERROR - langchain_mistral-small-latest - Error in classify_ticket: Failed to parse TicketClassification from completion {"ticket_type": "service_request", "ticket_priority": "low", "ticket_publisher_sentiment": "neutral", "tags": ["printing"], "responsible_team": "it_support", "confidence_score": 0.9, "initial_action": "Der Drucker\u00fcbersiedelungsauftrag kann als Routineaufgabe behandelt werden. Da der Drucker bereits vorhanden ist und nur der Standort gewechselt werden soll, ist keine dringende Bearbeitung erforderlich. Der IT-Support kann den Drucker bei Gelegenheit in das QM-B\u00fcro umziehen. Es sollte sichergestellt werden, dass der Drucker im neuen Standort korrekt eingerichtet und getestet wird, um sicherzustellen, dass er ordnungsgem\u00e4\u00df funktioniert. Der Benutzer hat keine Dringlichkeit angegeben, daher kann dieser Auftrag nach Bedarf erledigt werden.", "reasoning": "Der Ticket-Typ wurde als 'service_request' eingestuft, da es sich um eine geplante Anfrage handelt, die keine St\u00f6rung anzeigt, aber IT-Unterst\u00fctzung erfordert. Die Priorit\u00e4t ist 'low', da der Benutzer keine Dringlichkeit angegeben hat und der Auftrag bei Gelegenheit erledigt werden kann. Das Sentiment des Ticket-Erstellers ist 'neutral', da keine besondere Zufriedenheit oder Unzufriedenheit ausgedr\u00fcckt wird. Der Tag 'printing' wurde zugewiesen, da es sich um einen Drucker\u00fcbersiedelungsauftrag handelt. Das verantwortliche Team ist 'it_support', da es sich um eine Routineaufgabe handelt, die vom allgemeinen IT-Support-Team gehandhabt werden kann. Der Konfidenzscore ist hoch, da die Informationen im Ticket klar und eindeutig sind."}. Got: 1 validation error for TicketClassification
+ticket_sentiment
+  Field required [type=missing, input_value={'ticket_type': 'service_...ar und eindeutig sind."}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE 
+2025-08-30 22:23:11,423 - WARNING - langchain_mistral-small-latest - TKT-006: Ticket event not classified.
+2025-08-30 22:23:11,424 - INFO - langchain_mistral-small-latest - TKT-006: Evaluation score: 0
+2025-08-30 22:23:11,424 - INFO - langchain_mistral-small-latest - TKT-007: Start processing ticket event...
+2025-08-30 22:23:11,424 - DEBUG - langchain_mistral-small-latest - Using system prompt template: 
+## Role
+You are an IT help desk support assistant of an IT department team.
+Your task is to analyse incoming IT support tickets and provide structured output information about the ticket.
+
+## Context
+- The company has a diverse range of IT systems and applications.
+- We prioritize based on urgency and ticket submitter sentiment, 
+- Whereas the priority critical is only used, if the entire company is affected by an issue.
+- The help desk team consists of various specialists with different areas of expertise.
+
+## Classification Tasks
+1. Set a ticket type by choosing one of the following options:
+   - service_request (Routine, planned user requests that do not indicate a malfunction but require IT assistance. Examples are requests for new hardware, software, access to applications.)
+   - change_request (Formal proposal for modifications to any aspect of the IT environment, such as software updates, hardware replacements, configuration changes or application changes.)
+   - problem (Used when investigating the underlying cause of one or more incidents. It aims to analyze root causes and prevent recurrence.)
+   - incident (Unplanned interruption or reduction in quality of an IT service. Restore normal service as quickly as possible.))
+2. Set a ticket priority by choosing one of the following options:
+   - critical (Urgent issues needing immediate attention, causing major business disruption for the entire company or a larger amount of people.)
+   - high (Important issues to be addressed soon, potential for significant impact for one or a few employees.)
+   - medium (Standard issues that can be scheduled for regular handling, it's the default priority level.)
+   - low (Minor issues or requests that can be handled when convenient. The employee is not blocked by this issue.))
+3. Determine the ticket publishers sentiment by choosing one of the following options:
+   - positive (User expresses satisfaction or happiness with the service)
+   - neutral (User shows neither satisfaction nor dissatisfaction)
+   - negative (User expresses dissatisfaction, frustration, or anger))
+4. Assign between one tag or up to three tags by choosing from the following options:
+   - hardware (Issues with physical components other than printers (e.g. computers, laptops, phones, tablets, servers))
+   - software (Issues with any applications, operating systems, and software)
+   - network (Network-related issues including LAN, WAN, WiFi, and VPN)
+   - printing (Issues with printers, print servers, and scanning)
+   - onboarding (Issues related to employee onboarding processes (e.g. new employee))
+   - offboarding (Issues related to employee offboarding processes (e.g. employee leaving)))
+5. Assign a responsible team to the ticket by choosing one of the following options:
+   - it_support (First level support team handling general IT issues, ticket triage, employee onboarding and offboarding)
+   - hardware_network_team (Specialized team for hardware, network, and infrastructure issues)
+   - software_team (Specialized team responsible for software applications and related issues)
+   - erp_team (Specialized team for Dynamics 365 Business Central and ERP related issues only)
+   - datawarehouse_businessintelligence_team (Specialized team managing data warehouse and business intelligence tools like PowerBI))
+6. Provide a confidence score for your classification (between 0.0 and 1.0).
+7. Suggest an initial action for handling the ticket. Provide a brief explanation (5 to 10 sentences). Maximum 500 words. Provide in german language.
+8. Provide reasoning for your classification. Provide a brief explanation for your decisions made. Maximum 500 words. Provide in german language.
+
+Remember:
+- If you're unsure about any aspect, reflect that in your confidence score.
+- Always provide reasoning for your classification.
+- Escape the character '\' with '\\'.
+- Use proper json formatting for your output.
+
+
+
+## Output format instructions
+{{output_format_instructions}}
+
+2025-08-30 22:23:11,425 - DEBUG - langchain_mistral-small-latest - Using user prompt template: 
+## Input
+Analyse the following ticket and perform the classification tasks:
+Ticket subject: {subject}
+Ticket body: {body}
+
+2025-08-30 22:23:13,720 - ERROR - langchain_mistral-small-latest - Error in classify_ticket: Failed to parse TicketClassification from completion {"ticket_type": "service_request", "priority": "high", "sentiment": "negative", "tags": ["hardware"], "responsible_team": "it_support", "confidence_score": 0.9, "initial_action": "Zuerst sollte der IT-Support den Schaden am Handy \u00fcberpr\u00fcfen und dokumentieren. Anschlie\u00dfend sollte ein Ersatzger\u00e4t bestellt und die Daten vom alten Ger\u00e4t auf das neue Ger\u00e4t \u00fcbertragen werden. Der Mitarbeiter sollte \u00fcber den Fortschritt informiert werden und das neue Ger\u00e4t erhalten, sobald es verf\u00fcgbar ist. Falls das alte Ger\u00e4t repariert werden kann, sollte dies in Betracht gezogen werden, um Kosten zu sparen.", "reasoning": "Der Ticket-Typ ist ein service_request, da es sich um eine Routineanfrage f\u00fcr ein Ersatzger\u00e4t handelt, die nicht auf einen Systemfehler hinweist. Die Priorit\u00e4t ist hoch, da der Mitarbeiter sein Firmenhandy nicht mehr nutzen kann, was seine Produktivit\u00e4t beeintr\u00e4chtigt. Das Sentiment ist negativ, da der Mitarbeiter frustriert ist, weil sein Ger\u00e4t besch\u00e4digt ist. Der Tag ist hardware, da es sich um ein physisches Ger\u00e4t handelt. Das verantwortliche Team ist der IT-Support, da sie f\u00fcr die Bearbeitung von Hardware-Anfragen zust\u00e4ndig sind. Die Konfidenz ist hoch, da die Informationen im Ticket klar und pr\u00e4zise sind."}. Got: 2 validation errors for TicketClassification
+ticket_priority
+  Field required [type=missing, input_value={'ticket_type': 'service_...lar und präzise sind.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+ticket_sentiment
+  Field required [type=missing, input_value={'ticket_type': 'service_...lar und präzise sind.'}, input_type=dict]
+    For further information visit https://errors.pydantic.dev/2.11/v/missing
+For troubleshooting, visit: https://python.langchain.com/docs/troubleshooting/errors/OUTPUT_PARSING_FAILURE 
+2025-08-30 22:23:13,722 - WARNING - langchain_mistral-small-latest - TKT-007: Ticket event not classified.
+2025-08-30 22:23:13,722 - INFO - langchain_mistral-small-latest - TKT-007: Evaluation score: 0
+2025-08-30 22:23:13,723 - INFO - langchain_mistral-small-latest - Experiment completed.
